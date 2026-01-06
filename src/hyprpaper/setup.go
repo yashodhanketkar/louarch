@@ -1,8 +1,34 @@
 package hyprpaper
 
 import (
+	"fmt"
+	"log"
+	"os"
 	"os/exec"
+
+	"github.com/yashodhanketkar/arch/src/utils"
 )
+
+func updateConfig(monitors []Monitor, wallpapers []string) {
+	f, err := os.Create(ConfigPath)
+	if err != nil {
+		log.Fatalf("failed to write config: %v", err)
+	}
+	defer f.Close()
+
+	fmt.Fprintln(f, "ipc = true")
+	fmt.Fprint(f, "splash = false\n\n")
+
+	for i, m := range monitors {
+		wp := wallpapers[i%len(wallpapers)]
+		fmt.Fprintf(f,
+			`wallpaper {
+  monitor = %s
+  path = %s/%s
+}
+`, m.Name, WallpaperDir, wp)
+	}
+}
 
 func setupHyprpaper(selected string) {
 	restartHyprpaperProcess()
@@ -13,12 +39,12 @@ func setupHyprpaper(selected string) {
 func restartHyprpaperProcess() {
 	// reload hyprpaper process to apply changes
 	_ = exec.Command("pkill", "hyprpaper").Run()
-	cmdRunner("hyprctl", "dispatch", "exec", "hyprpaper")
+	utils.CmdRunner("hyprctl", "dispatch", "exec", "hyprpaper")
 }
 
 func generateColorPallete(selected string) {
 	// generate new color pallete from wallpaper of primary monitor
-	cmdRunner("wallust", "run", "-q", "-u", WallpaperDir+"/"+selected)
+	utils.CmdRunner("wallust", "run", "-q", "-u", WallpaperDir+"/"+selected)
 }
 
 func setupTheme() {
@@ -26,15 +52,15 @@ func setupTheme() {
 	// start new waybar instance with theme
 	// restart waybar if it's running
 	_ = exec.Command("pkill", "waybar").Run()
-	cmdRunner("hyprctl", "-q", "dispatch", "exec", "waybar")
+	utils.CmdRunner("hyprctl", "-q", "dispatch", "exec", "waybar")
 
 	// setup swaync theme
 	// apply config and css changes
 	ok := exec.Command("pidof", "swaync").Run()
 	if ok != nil {
-		cmdRunner("hyprctl", "-q", "dispatch", "exec", "swaync")
+		utils.CmdRunner("hyprctl", "-q", "dispatch", "exec", "swaync")
 	}
-	cmdRunner("swaync-client", "-rs")
+	utils.CmdRunner("swaync-client", "-rs")
 
 	// source tmux colors if tmux is running to apply colors
 	_ = exec.Command("tmux", "source-file", "~/.config/tmux/colors.conf").Run()

@@ -5,16 +5,16 @@ default: run
 
 # INFO: Project commands
 run:
-	@go run main/main.go
+	@go run src/main.go $(cmd)
 
 start:
-	@./build/wallswitcher
+	@./build/louarch $(cmd)
 
 startclean: build
-	@./build/wallswitcher
+	@./build/louarch $(cmd)
 
 build:
-	@go build -o ./build/wallswitcher main/main.go
+	@go build -o ./build/louarch src/main.go
 
 clean:
 	@rm -rf ./build/

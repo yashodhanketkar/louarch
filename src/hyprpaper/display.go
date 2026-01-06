@@ -7,10 +7,12 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/yashodhanketkar/arch/src/utils"
 )
 
 func listMonitors() []Monitor {
-	out := cmdRunner("hyprctl", "monitors", "-j")
+	out := utils.CmdRunner("hyprctl", "monitors", "-j")
 
 	var mons []Monitor
 	if err := json.Unmarshal([]byte(out), &mons); err != nil {
@@ -50,12 +52,12 @@ func selectWallpapers(wallpapers []string, monitors []Monitor) ([]string, bool) 
 	i := 0
 
 	for i <= nos {
-		wp, ok := wofiPrompt(
+		wp, ok := utils.WofiPrompt(
 			fmt.Sprintf("Select Wallpaper for %v", monitors[i].Name),
 			wallpapers...,
 		)
 		if !ok {
-			wofiPrompt("Exiting without selecting...", "Ok")
+			utils.WofiPrompt("Exiting without selecting...", "Ok")
 			return nil, false
 		}
 
@@ -66,7 +68,7 @@ func selectWallpapers(wallpapers []string, monitors []Monitor) ([]string, bool) 
 			break
 		}
 
-		continueChoice, _ := wofiPrompt("Select more", "No", "Yes")
+		continueChoice, _ := utils.WofiPrompt("Select more", "No", "Yes")
 		switch continueChoice {
 		case "Yes":
 			continue
