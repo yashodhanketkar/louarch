@@ -6,6 +6,8 @@ import (
 	"github.com/yashodhanketkar/arch/src/utils"
 )
 
+type AudioDevices = utils.AudioDevices
+
 func audioSetter(audioType string) {
 	switch audioType {
 	case "sink":

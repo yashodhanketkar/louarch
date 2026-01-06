@@ -12,7 +12,7 @@ func listSinks() ([]string, string) {
 	sinksJson := utils.CmdRunner("pactl", "--format=json", "list", "sinks")
 
 	var sinkList = make([]string, 0)
-	var sinks []Device
+	var sinks []AudioDevices
 
 	if err := json.Unmarshal([]byte(sinksJson), &sinks); err != nil {
 		log.Fatalf("failed to parse sinks json: %v", err)

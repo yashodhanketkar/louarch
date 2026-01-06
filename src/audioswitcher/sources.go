@@ -12,7 +12,7 @@ func listSources() ([]string, string) {
 	sourceJSON := utils.CmdRunner("pactl", "--format=json", "list", "sources")
 
 	var sourceList = make([]string, 0)
-	var sources []Device
+	var sources []AudioDevices
 
 	if err := json.Unmarshal([]byte(sourceJSON), &sources); err != nil {
 		log.Fatalf("failed to parse sources json: %v", err)

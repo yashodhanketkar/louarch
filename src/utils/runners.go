@@ -17,7 +17,7 @@ func CmdRunner(cmd string, args ...string) string {
 }
 
 func WofiPrompt(prompt string, options ...string) (string, bool) {
-	cmd := exec.Command("wofi", "-d", "-p", prompt)
+	cmd := exec.Command("wofi", "-W", "800", "-d", "-p", prompt)
 	cmd.Stdin = strings.NewReader(strings.Join(options, "\n"))
 
 	var out bytes.Buffer
