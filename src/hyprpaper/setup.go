@@ -6,11 +6,11 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/yashodhanketkar/arch/src/utils"
+	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
 func updateConfig(monitors []Monitor, wallpapers []string) {
-	f, err := os.Create(ConfigPath)
+	f, err := os.Create(utils.AppConfig.ConfigPath)
 	if err != nil {
 		log.Fatalf("failed to write config: %v", err)
 	}
@@ -26,7 +26,7 @@ func updateConfig(monitors []Monitor, wallpapers []string) {
   monitor = %s
   path = %s/%s
 }
-`, m.Name, WallpaperDir, wp)
+`, m.Name, utils.AppConfig.WallpaperDir, wp)
 	}
 }
 
@@ -44,7 +44,7 @@ func restartHyprpaperProcess() {
 
 func generateColorPallete(selected string) {
 	// generate new color pallete from wallpaper of primary monitor
-	utils.CmdRunner("wallust", "run", "-q", "-u", WallpaperDir+"/"+selected)
+	utils.CmdRunner("wallust", "run", "-q", "-u", utils.AppConfig.WallpaperDir+"/"+selected)
 }
 
 func setupTheme() {

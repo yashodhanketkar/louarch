@@ -3,7 +3,7 @@ package browser
 import (
 	"log"
 
-	"github.com/yashodhanketkar/arch/src/utils"
+	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
 func getSearchItem() string {
@@ -16,5 +16,5 @@ func getSearchItem() string {
 
 func search() {
 	searchTerm := getSearchItem()
-	utils.CmdRunner(BROWSER, SEARCHENGINE+searchTerm)
+	utils.CmdRunner(utils.AppConfig.Browser, utils.AppConfig.SearchEngine+searchTerm)
 }

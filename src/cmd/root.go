@@ -8,7 +8,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "arch",
+	Use:   "louarch",
 	Short: "Small utility packages for personal arch linux configuration",
 	Long:  ``,
 	// Uncomment the following line if your bare application

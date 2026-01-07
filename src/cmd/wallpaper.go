@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/yashodhanketkar/arch/src/hyprpaper"
+	"github.com/yashodhanketkar/louarch/src/hyprpaper"
 )
 
 // wallpaperCmd represents the wallpaper command

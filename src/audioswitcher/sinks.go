@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/yashodhanketkar/arch/src/utils"
+	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
 func listSinks() ([]string, string) {

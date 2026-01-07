@@ -1,4 +1,4 @@
-module github.com/yashodhanketkar/arch
+module github.com/yashodhanketkar/louarch
 
 go 1.25.5
 

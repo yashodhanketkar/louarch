@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/yashodhanketkar/arch/src/browser"
+	"github.com/yashodhanketkar/louarch/src/browser"
 )
 
 // wallpaperCmd represents the wallpaper command
@@ -34,7 +34,7 @@ bookmarks.`,
 func parseBrowsingModeFlag(cmd *cobra.Command) string {
 	browsingMode, err := cmd.Flags().GetString("mode")
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Fatal(err)
 	}
 	return browsingMode
 }

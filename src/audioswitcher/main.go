@@ -3,7 +3,7 @@ package audioswitcher
 import (
 	"log"
 
-	"github.com/yashodhanketkar/arch/src/utils"
+	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
 type AudioDevices = utils.AudioDevices

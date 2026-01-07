@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/yashodhanketkar/arch/src/audioswitcher"
+	"github.com/yashodhanketkar/louarch/src/audioswitcher"
 )
 
 // wallpaperCmd represents the wallpaper command

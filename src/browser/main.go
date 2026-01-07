@@ -1,15 +1,7 @@
 package browser
 
 import (
-	"fmt"
-
-	"github.com/yashodhanketkar/arch/src/utils"
-)
-
-const (
-	BOOKMARKS_FILE = utils.BookmarksFile
-	BROWSER        = utils.Browser
-	SEARCHENGINE   = utils.SearchEngine
+	"log"
 )
 
 func modeSelector(mode string) {
@@ -19,7 +11,7 @@ func modeSelector(mode string) {
 	case "bookmarks":
 		selectOptions()
 	default:
-		fmt.Println("invalid mode")
+		log.Fatal("invalid mode")
 	}
 }
 

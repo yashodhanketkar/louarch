@@ -1,13 +1,10 @@
 package hyprpaper
 
-import "github.com/yashodhanketkar/arch/src/utils"
+import (
+	"github.com/yashodhanketkar/louarch/src/utils"
+)
 
 type Monitor = utils.Monitor
-
-const (
-	WallpaperDir = utils.WallpaperDir
-	ConfigPath   = utils.ConfigPath
-)
 
 func WallSwitcher() {
 	monitors := listMonitors()

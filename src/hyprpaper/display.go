@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/yashodhanketkar/arch/src/utils"
+	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
 func listMonitors() []Monitor {
@@ -23,7 +23,7 @@ func listMonitors() []Monitor {
 }
 
 func listWallpapers() []string {
-	entries, err := os.ReadDir(WallpaperDir)
+	entries, err := os.ReadDir(utils.AppConfig.WallpaperDir)
 	if err != nil {
 		log.Fatalf("failed to read wallpaper dir: %v", err)
 	}
@@ -76,6 +76,7 @@ func selectWallpapers(wallpapers []string, monitors []Monitor) ([]string, bool) 
 			return selected, true
 		default:
 			selected = selected[:len(selected)-1]
+			i = i - 1
 		}
 	}
 
