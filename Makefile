@@ -19,6 +19,14 @@ build:
 clean:
 	@rm -rf ./build/
 
+install: build
+	@chmod +x ./install.sh
+	@./install.sh
+
+uninstall:
+	@chmod +x ./uninstall.sh
+	@./uninstall.sh
+
 help:
 	@echo "run       run the app"
 	@echo "start     build and run the app"

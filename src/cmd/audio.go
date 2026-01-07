@@ -9,7 +9,7 @@ import (
 
 // wallpaperCmd represents the wallpaper command
 var audioCmd = &cobra.Command{
-	Use:   "audio switcher",
+	Use:   "audio",
 	Short: "Select audio devices",
 	Long: `Select audio devices for your system
 

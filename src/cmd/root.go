@@ -9,15 +9,17 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "louarch",
-	Short: "Small utility packages for personal arch linux configuration",
-	Long:  ``,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Short: "Personalization tool for personal linux setup",
+	Long: `This application provides a set of perosnalization tools for Arch Linux.
+
+This tool is written for personal setup which consists of hypraland
+winodws manager (powered by wayland). It provides following tools:
+
+1. Audio - Switches between audio devices. (both Sink and Source)
+2. Wallpaper - Changes wallpaper and apply new theme generated from wallpaper.
+3. Browsing - Bookmark and search with wofi and browser (default: firefox).`,
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -26,13 +28,5 @@ func Execute() {
 }
 
 func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.arch.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
 	rootCmd.Flags().BoolP("root", "r", false, "Help message for toggle")
 }
