@@ -1,13 +1,13 @@
 package cmd
 
 import (
-	"log"
-
 	"github.com/spf13/cobra"
 	"github.com/yashodhanketkar/louarch/src/audioswitcher"
+	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
-// wallpaperCmd represents the wallpaper command
+var mode audioswitcher.AudioType
+
 var audioCmd = &cobra.Command{
 	Use:   "audio",
 	Short: "Select audio devices",
@@ -15,20 +15,18 @@ var audioCmd = &cobra.Command{
 
 This command will prompt user via wofi to select audio device based on
 currently available sources or sinks.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		audioswitcher.AudioSwitcher(parseAudioTypeFlag(cmd))
+	PreRun: func(cmd *cobra.Command, args []string) {
+		utils.EarlyExit(utils.Wofi)
 	},
-}
-
-func parseAudioTypeFlag(cmd *cobra.Command) string {
-	audioType, err := cmd.Flags().GetString("type")
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	return audioType
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return audioswitcher.Modes.Call(mode)
+	},
 }
 
 func init() {
 	rootCmd.AddCommand(audioCmd)
-	audioCmd.Flags().StringP("type", "t", "sink", "type of audio switcher")
+	audioCmd.GroupID = "productivity"
+
+	audioCmd.Flags().
+		StringVarP(&mode, "type", "t", "sink", "mode: "+audioswitcher.Modes.Available())
 }

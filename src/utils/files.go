@@ -31,10 +31,14 @@ func readConfig(configPath string) {
 	}
 }
 
-func fileExists(file string) bool {
+func FileExists(file string) bool {
 	_, err := os.Stat(file)
 	if errors.Is(err, os.ErrNotExist) {
 		return false
 	}
 	return true
 }
+
+// func fileWriter(filePath string, data ...string) {
+// 	file, err = os.st
+// }

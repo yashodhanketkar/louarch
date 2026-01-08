@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"github.com/yashodhanketkar/louarch/src/hyprpaper"
+	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
 // wallpaperCmd represents the wallpaper command
@@ -15,6 +16,9 @@ This command will prompt user via wofi to select wallpaper based on the
 current monitors. Based on selected wallpapers, it will generate a theme
 pallete with help of wallust. Finally, it will apply theme colors to the
 UI tools such as waybar, sway-nc, etc.`,
+	PreRun: func(cmd *cobra.Command, args []string) {
+		utils.EarlyExit(utils.Wofi)
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		hyprpaper.WallSwitcher()
 	},
@@ -22,4 +26,5 @@ UI tools such as waybar, sway-nc, etc.`,
 
 func init() {
 	rootCmd.AddCommand(wallpaperCmd)
+	wallpaperCmd.GroupID = "hyprland"
 }

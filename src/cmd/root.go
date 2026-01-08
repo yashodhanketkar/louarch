@@ -17,7 +17,8 @@ winodws manager (powered by wayland). It provides following tools:
 
 1. Audio - Switches between audio devices. (both Sink and Source)
 2. Wallpaper - Changes wallpaper and apply new theme generated from wallpaper.
-3. Browsing - Bookmark and search with wofi and browser (default: firefox).`,
+3. Browser - Bookmark and search with wofi and browser (default: firefox).
+4. Osmode - Toggle between diffrent system modes.`,
 }
 
 func Execute() {
@@ -29,4 +30,6 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().BoolP("root", "r", false, "Help message for toggle")
+	rootCmd.AddGroup(&cobra.Group{ID: "hyprland", Title: "Hyprland managment commands"})
+	rootCmd.AddGroup(&cobra.Group{ID: "productivity", Title: "Productivity shortcuts"})
 }

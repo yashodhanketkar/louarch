@@ -35,3 +35,8 @@ func WofiPrompt(prompt string, options ...string) (string, bool) {
 
 	return choice, true
 }
+
+func Notifier(args ...string) {
+	cmds := append([]string{"notify", "2", "5000"}, args...)
+	CmdRunner("hyprctl", cmds...)
+}

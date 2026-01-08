@@ -1,26 +1,18 @@
 package audioswitcher
 
 import (
-	"log"
-
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
 type AudioDevices = utils.AudioDevices
+type AudioType = string
 
-func audioSetter(audioType string) {
-	switch audioType {
-	case "sink":
-		sinkName := selectSink()
-		utils.CmdRunner("pactl", "set-default-sink", sinkName)
-	case "source":
-		sourceName := selectSource()
-		utils.CmdRunner("pactl", "set-default-source", sourceName)
-	default:
-		log.Fatalf("invalid sink type %s", audioType)
-	}
-}
+const (
+	AudioSink   AudioType = "sink"
+	AudioSource AudioType = "source"
+)
 
-func AudioSwitcher(audioType string) {
-	audioSetter(audioType)
-}
+var Modes = utils.NewEnum(map[AudioType]func(){
+	AudioSink:   setSink,
+	AudioSource: setSource,
+})

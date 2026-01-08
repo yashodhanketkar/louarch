@@ -38,3 +38,8 @@ func selectSink() string {
 
 	return selectedSink
 }
+
+func setSink() {
+	selected := selectSink()
+	utils.Notifier("Audio output changed to %s", selected)
+}

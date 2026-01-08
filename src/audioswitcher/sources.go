@@ -37,3 +37,8 @@ func selectSource() string {
 
 	return selectedSource
 }
+
+func setSource() {
+	selected := selectSource()
+	utils.Notifier("Audio input changed to %s", selected)
+}

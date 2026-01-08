@@ -23,7 +23,7 @@ func Configure() {
 	readConfig(os.ExpandEnv("$HOME/.local/share/louarch/config.json"))
 
 	// if user config exists, replace default values with user values
-	if fileExists(configFile) {
+	if FileExists(configFile) {
 		readConfig(configFile)
 	}
 

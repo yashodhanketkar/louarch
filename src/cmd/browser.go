@@ -5,9 +5,9 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/yashodhanketkar/louarch/src/browser"
+	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
-// wallpaperCmd represents the wallpaper command
 var browserCmd = &cobra.Command{
 	Use:   "browser",
 	Short: "Browsing shortcuts",
@@ -26,6 +26,9 @@ Bookmarks. Based on the selected bookmark, it will open the bookmark in
 the firefox browser. This booksmarks can be modified by the user inside
 wofi prompt using 'option' item. This will allow user to add or remove
 bookmarks.`,
+	PreRun: func(cmd *cobra.Command, args []string) {
+		utils.EarlyExit(utils.Wofi)
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		browser.Browser(parseBrowsingModeFlag(cmd))
 	},
@@ -42,4 +45,5 @@ func parseBrowsingModeFlag(cmd *cobra.Command) string {
 func init() {
 	rootCmd.AddCommand(browserCmd)
 	browserCmd.Flags().StringP("mode", "m", "search", "select serach or browsing mode")
+	browserCmd.GroupID = "productivity"
 }

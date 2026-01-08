@@ -5,7 +5,7 @@ default: run
 
 # INFO: Project commands
 run:
-	@go run src/main.go $(cmd)
+	@go run . $(cmd)
 
 start:
 	@./build/louarch $(cmd)
@@ -13,11 +13,15 @@ start:
 startclean: build
 	@./build/louarch $(cmd)
 
-build:
-	@go build -o ./build/louarch src/main.go
+build: requirements
+	@go build -o ./build/louarch .
 
 clean:
 	@rm -rf ./build/
+
+requirements:
+	@chmod +x ./check-requirements.sh
+	@./check-requirements.sh
 
 install: build
 	@chmod +x ./install.sh
