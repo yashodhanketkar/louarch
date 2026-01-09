@@ -10,18 +10,18 @@ import (
 )
 
 func updateConfig(monitors []Monitor, wallpapers []string) {
-	f, err := os.Create(utils.AppConfig.ConfigPath)
+	file, err := os.Create(utils.AppConfig.ConfigPath)
 	if err != nil {
 		log.Fatalf("failed to write config: %v", err)
 	}
-	defer f.Close()
+	defer file.Close()
 
-	fmt.Fprintln(f, "ipc = true")
-	fmt.Fprint(f, "splash = false\n\n")
+	fmt.Fprintln(file, "ipc = true")
+	fmt.Fprint(file, "splash = false\n\n")
 
 	for i, m := range monitors {
 		wp := wallpapers[i%len(wallpapers)]
-		fmt.Fprintf(f,
+		fmt.Fprintf(file,
 			`wallpaper {
   monitor = %s
   path = %s/%s

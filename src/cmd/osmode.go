@@ -7,16 +7,8 @@ import (
 
 var osmodeCmd = &cobra.Command{
 	Use:   "osmode",
-	Short: "Set operating system modes",
-	Long: `Set operating system modes
-
-This command will allow user to toggle between system modes.
-Currently, there are two modes available:
-
-1. Game mode: This mode will disable bluring, animation, etc. to give user
-more performance.
-2. Night mode: This mode will enable night light/bluelight filter to give
-user more comfortable viewing.`,
+	Short: hyprland.ShortDesc,
+	Long:  hyprland.LongDesc,
 	Args: cobra.MatchAll(
 		cobra.ExactArgs(1),
 		cobra.OnlyValidArgs,

@@ -12,7 +12,7 @@ const (
 	AudioSource AudioType = "source"
 )
 
-var Modes = utils.NewEnum(map[AudioType]func(){
+var Modes = utils.New(map[AudioType]func(){
 	AudioSink:   setSink,
 	AudioSource: setSource,
 })

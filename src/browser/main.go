@@ -1,20 +1,17 @@
 package browser
 
 import (
-	"log"
+	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
-func modeSelector(mode string) {
-	switch mode {
-	case "search":
-		search()
-	case "bookmarks":
-		selectOptions()
-	default:
-		log.Fatal("invalid mode")
-	}
-}
+type BrowsingMode = string
 
-func Browser(mode string) {
-	modeSelector(mode)
-}
+const (
+	SearchMode    BrowsingMode = "search"
+	BookmarksMode BrowsingMode = "bookmarks"
+)
+
+var Modes = utils.New(map[BrowsingMode]func(){
+	SearchMode:    search,
+	BookmarksMode: selectOptions,
+})

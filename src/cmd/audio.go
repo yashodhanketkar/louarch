@@ -6,20 +6,17 @@ import (
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
-var mode audioswitcher.AudioType
+var audioMode audioswitcher.AudioType
 
 var audioCmd = &cobra.Command{
 	Use:   "audio",
-	Short: "Select audio devices",
-	Long: `Select audio devices for your system
-
-This command will prompt user via wofi to select audio device based on
-currently available sources or sinks.`,
+	Short: audioswitcher.ShortDesc,
+	Long:  audioswitcher.LongDesc,
 	PreRun: func(cmd *cobra.Command, args []string) {
 		utils.EarlyExit(utils.Wofi)
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return audioswitcher.Modes.Call(mode)
+		return audioswitcher.Modes.Call(audioMode)
 	},
 }
 
@@ -27,6 +24,8 @@ func init() {
 	rootCmd.AddCommand(audioCmd)
 	audioCmd.GroupID = "productivity"
 
-	audioCmd.Flags().
-		StringVarP(&mode, "type", "t", "sink", "mode: "+audioswitcher.Modes.Available())
+	audioCmd.Flags().StringVarP(
+		&audioMode, "type", "t", "sink",
+		"mode: "+audioswitcher.Modes.Available(),
+	)
 }

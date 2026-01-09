@@ -5,16 +5,12 @@ import (
 )
 
 type Monitor = utils.Monitor
+type WallpaperMode = string
 
-func WallSwitcher() {
-	monitors := listMonitors()
-	wallpapers := listWallpapers()
+const (
+	apply WallpaperMode = "apply"
+)
 
-	selected, ok := selectWallpapers(wallpapers, monitors)
-	if !ok {
-		return
-	}
-
-	updateConfig(monitors, selected)
-	setupHyprpaper(selected[0])
-}
+var Modes = utils.New(map[WallpaperMode]func(){
+	apply: wallSwitcher,
+})

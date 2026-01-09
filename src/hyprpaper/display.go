@@ -82,3 +82,16 @@ func selectWallpapers(wallpapers []string, monitors []Monitor) ([]string, bool) 
 
 	return selected, true
 }
+
+func wallSwitcher() {
+	monitors := listMonitors()
+	wallpapers := listWallpapers()
+
+	selected, ok := selectWallpapers(wallpapers, monitors)
+	if !ok {
+		return
+	}
+
+	updateConfig(monitors, selected)
+	setupHyprpaper(selected[0])
+}

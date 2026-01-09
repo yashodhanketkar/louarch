@@ -9,7 +9,7 @@ type StringEnum[T ~string] struct {
 	values map[T]func()
 }
 
-func NewEnum[T ~string](m map[T]func()) *StringEnum[T] {
+func New[T ~string](m map[T]func()) *StringEnum[T] {
 	return &StringEnum[T]{values: m}
 }
 

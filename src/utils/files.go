@@ -38,7 +38,3 @@ func FileExists(file string) bool {
 	}
 	return true
 }
-
-// func fileWriter(filePath string, data ...string) {
-// 	file, err = os.st
-// }

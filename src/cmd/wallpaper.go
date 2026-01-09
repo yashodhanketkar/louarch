@@ -6,25 +6,25 @@ import (
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
-// wallpaperCmd represents the wallpaper command
+var wallpaperMode hyprpaper.WallpaperMode
+
 var wallpaperCmd = &cobra.Command{
 	Use:   "wallpaper",
-	Short: "Wallpaper switcher",
-	Long: `Update wallpaper and theme for personal linux configuration.
-
-This command will prompt user via wofi to select wallpaper based on the
-current monitors. Based on selected wallpapers, it will generate a theme
-pallete with help of wallust. Finally, it will apply theme colors to the
-UI tools such as waybar, sway-nc, etc.`,
+	Short: hyprpaper.ShortDesc,
+	Long:  hyprpaper.LongDesc,
 	PreRun: func(cmd *cobra.Command, args []string) {
 		utils.EarlyExit(utils.Wofi)
 	},
-	Run: func(cmd *cobra.Command, args []string) {
-		hyprpaper.WallSwitcher()
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return hyprpaper.Modes.Call(wallpaperMode)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(wallpaperCmd)
 	wallpaperCmd.GroupID = "hyprland"
+	wallpaperCmd.Flags().StringVarP(
+		&wallpaperMode, "mode", "m", "apply",
+		"options: "+hyprpaper.Modes.Available(),
+	)
 }

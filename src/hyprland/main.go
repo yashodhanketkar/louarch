@@ -11,7 +11,7 @@ const (
 	NightMode Mode = "night"
 )
 
-var Modes = utils.NewEnum(map[Mode]func(){
+var Modes = utils.New(map[Mode]func(){
 	GameMode:  toggleGM,
 	NightMode: toggleNM,
 })
