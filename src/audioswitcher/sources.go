@@ -40,5 +40,6 @@ func selectSource() string {
 
 func setSource() {
 	selected := selectSource()
+	utils.CmdRunner("pactl", "set-default-sink", selected)
 	utils.Notifier("Audio input changed to %s", selected)
 }

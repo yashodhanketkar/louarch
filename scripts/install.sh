@@ -4,7 +4,7 @@ echo "Checking system requirements..."
 
 # check if requirements are met
 sleep 0.5
-./check-requirements.sh
+./scripts/check-requirements.sh
 if [ $? -ne 0 ]; then
   echo "Installation aborted due to unmet dependencies."
   exit 1

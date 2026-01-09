@@ -20,16 +20,16 @@ clean:
 	@rm -rf ./build/
 
 requirements:
-	@chmod +x ./check-requirements.sh
-	@./check-requirements.sh
+	@chmod +x ./scripts/check-requirements.sh
+	@./scripts/check-requirements.sh
 
 install: build
-	@chmod +x ./install.sh
-	@./install.sh
+	@chmod +x ./scripts/install.sh
+	@./scripts/install.sh
 
 uninstall:
-	@chmod +x ./uninstall.sh
-	@./uninstall.sh
+	@chmod +x ./scripts/uninstall.sh
+	@./scripts/uninstall.sh
 
 help:
 	@echo "run       run the app"

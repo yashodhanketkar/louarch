@@ -28,4 +28,10 @@ func init() {
 		&browserMode, "mode", "m", "search",
 		"options: "+browser.Modes.Available(),
 	)
+	browserCmd.RegisterFlagCompletionFunc(
+		"mode",
+		func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+			return browser.Modes.Values(), cobra.ShellCompDirectiveNoFileComp
+		},
+	)
 }

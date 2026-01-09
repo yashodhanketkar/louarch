@@ -28,4 +28,10 @@ func init() {
 		&audioMode, "type", "t", "sink",
 		"mode: "+audioswitcher.Modes.Available(),
 	)
+	audioCmd.RegisterFlagCompletionFunc(
+		"type",
+		func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+			return audioswitcher.Modes.Values(), cobra.ShellCompDirectiveNoFileComp
+		},
+	)
 }
