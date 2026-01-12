@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/yashodhanketkar/louarch/src/hyprpaper"
+	"github.com/yashodhanketkar/louarch/src/hyprland/hyprpaper"
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
@@ -22,7 +22,7 @@ var wallpaperCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(wallpaperCmd)
-	wallpaperCmd.GroupID = "hyprland"
+	wallpaperCmd.GroupID = "Hyprland"
 	wallpaperCmd.Flags().StringVarP(
 		&wallpaperMode, "mode", "m", "apply",
 		"options: "+hyprpaper.Modes.Available(),

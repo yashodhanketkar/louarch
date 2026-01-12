@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/yashodhanketkar/louarch/src/browser"
+	"github.com/yashodhanketkar/louarch/src/shortcuts/browser"
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
@@ -22,7 +22,7 @@ var browserCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(browserCmd)
-	browserCmd.GroupID = "productivity"
+	browserCmd.GroupID = "Shortcuts"
 
 	browserCmd.Flags().StringVarP(
 		&browserMode, "mode", "m", "search",

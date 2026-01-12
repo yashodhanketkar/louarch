@@ -1,4 +1,4 @@
-package hyprland
+package hyprmodes
 
 import (
 	"os/exec"

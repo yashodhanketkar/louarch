@@ -29,6 +29,6 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().BoolP("root", "r", false, "Help message for toggle")
-	rootCmd.AddGroup(&cobra.Group{ID: "hyprland", Title: "Hyprland managment commands"})
-	rootCmd.AddGroup(&cobra.Group{ID: "productivity", Title: "Productivity shortcuts"})
+	rootCmd.AddGroup(&cobra.Group{ID: "Hyprland", Title: "Hyprland managment commands"})
+	rootCmd.AddGroup(&cobra.Group{ID: "Shortcuts", Title: "Shortcuts for frequently used commands"})
 }

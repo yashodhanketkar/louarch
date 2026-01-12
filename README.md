@@ -94,8 +94,8 @@ Make sure you have above tools installed before proceeding with installation.
 make install
 
 # without make installed
-chmod a+x ./install.sh
-./install.sh
+chmod a+x ./scripts/install.sh
+./scripts/install.sh
 ```
 
 ### Uninstallation
@@ -105,8 +105,8 @@ chmod a+x ./install.sh
 make uninstall
 
 # without make installed
-chmod a+x ./uninstall.sh
-./uninstall.sh
+chmod a+x ./scripts/uninstall.sh
+./scripts/uninstall.sh
 ```
 
 LICENSE

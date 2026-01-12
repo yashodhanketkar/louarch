@@ -1,4 +1,4 @@
-package hyprland
+package hyprmodes
 
 const (
 	ShortDesc = "Set operating system modes"

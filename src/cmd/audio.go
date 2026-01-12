@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/yashodhanketkar/louarch/src/audioswitcher"
+	"github.com/yashodhanketkar/louarch/src/shortcuts/audioswitcher"
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
@@ -22,7 +22,7 @@ var audioCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(audioCmd)
-	audioCmd.GroupID = "productivity"
+	audioCmd.GroupID = "Shortcuts"
 
 	audioCmd.Flags().StringVarP(
 		&audioMode, "type", "t", "sink",
