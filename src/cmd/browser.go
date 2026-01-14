@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/yashodhanketkar/louarch/src/internal"
 	"github.com/yashodhanketkar/louarch/src/shortcuts/browser"
-	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
 var browserMode browser.BrowsingMode
@@ -13,7 +13,7 @@ var browserCmd = &cobra.Command{
 	Short: browser.ShortDesc,
 	Long:  browser.LongDesc,
 	PreRun: func(cmd *cobra.Command, args []string) {
-		utils.EarlyExit(utils.Wofi)
+		internal.EarlyExit(internal.Wofi)
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return browser.Modes.Call(browserMode)

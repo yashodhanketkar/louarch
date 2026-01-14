@@ -1,13 +1,8 @@
-package utils
+package fs
 
 import (
 	"os"
 	"regexp"
-)
-
-var (
-	configFile = os.ExpandEnv("$HOME/.config/louarch/config.json")
-	AppConfig  = Config{}
 )
 
 func handleEnv(config *Config) {
@@ -20,11 +15,11 @@ func handleEnv(config *Config) {
 }
 
 func Configure() {
-	readConfig(os.ExpandEnv("$HOME/.local/share/louarch/config.json"))
+	ReadConfig(os.ExpandEnv("$HOME/.local/share/louarch/config.json"), &AppConfig)
 
 	// if user config exists, replace default values with user values
 	if FileExists(configFile) {
-		readConfig(configFile)
+		ReadConfig(configFile, &AppConfig)
 	}
 
 	handleEnv(&AppConfig)

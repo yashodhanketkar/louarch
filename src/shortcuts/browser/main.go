@@ -1,7 +1,7 @@
 package browser
 
 import (
-	"github.com/yashodhanketkar/louarch/src/utils"
+	"github.com/yashodhanketkar/louarch/src/internal"
 )
 
 type BrowsingMode = string
@@ -11,7 +11,7 @@ const (
 	BookmarksMode BrowsingMode = "bookmarks"
 )
 
-var Modes = utils.New(map[BrowsingMode]func(){
-	SearchMode:    search,
-	BookmarksMode: selectOptions,
+var Modes = internal.New(map[BrowsingMode]func(ctx *internal.Context){
+	SearchMode:    func(ctx *internal.Context) { search() },
+	BookmarksMode: func(ctx *internal.Context) { selectOptions() },
 })

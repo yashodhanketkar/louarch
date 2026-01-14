@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/yashodhanketkar/louarch/src/fs"
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
@@ -49,7 +50,7 @@ func stopGm() {
 
 func toggleGM() {
 	// always trigger start for first time run after login
-	if !utils.FileExists(flagFile) {
+	if !fs.FileExists(flagFile) {
 		startGm()
 	} else {
 		stopGm()

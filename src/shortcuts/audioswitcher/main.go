@@ -1,6 +1,7 @@
 package audioswitcher
 
 import (
+	"github.com/yashodhanketkar/louarch/src/internal"
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
@@ -12,7 +13,7 @@ const (
 	AudioSource AudioType = "source"
 )
 
-var Modes = utils.New(map[AudioType]func(){
-	AudioSink:   setSink,
-	AudioSource: setSource,
+var Modes = internal.New(map[AudioType]func(ctx *internal.Context){
+	AudioSink:   func(c *internal.Context) { setSink() },
+	AudioSource: func(c *internal.Context) { setSource() },
 })

@@ -7,6 +7,7 @@ import (
 	"slices"
 	"strings"
 
+	"github.com/yashodhanketkar/louarch/src/fs"
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
@@ -20,10 +21,10 @@ func cleanupBookmarks(bookmarks []string) []string {
 
 func getBookmarks() []string {
 	var bookmarks = make([]string, 0)
-	bookmarksRaw, err := os.ReadFile(utils.AppConfig.BookmarksFile)
+	bookmarksRaw, err := os.ReadFile(fs.AppConfig.BookmarksFile)
 
 	if err != nil {
-		utils.CreateFile(utils.AppConfig.BookmarksFile, "Creating bookmarks file")
+		fs.CreateFile(fs.AppConfig.BookmarksFile, "Creating bookmarks file")
 	} else {
 		bookmarks = strings.Split(string(bookmarksRaw), "\n")
 	}
@@ -34,7 +35,7 @@ func getBookmarks() []string {
 }
 
 func openBookmark(bookmark string) {
-	utils.CmdRunner(utils.AppConfig.Browser, bookmark)
+	utils.CmdRunner(fs.AppConfig.Browser, bookmark)
 }
 
 func selectOptions() {
@@ -66,9 +67,9 @@ func removeBookmark() {
 		log.Fatalf("Error occured while selecting bookmark")
 	}
 
-	file, err := os.Open(utils.AppConfig.BookmarksFile)
+	file, err := os.Open(fs.AppConfig.BookmarksFile)
 	if err != nil {
-		log.Fatalf("Error opening bookmarks file %s\n%v", utils.AppConfig.BookmarksFile, err)
+		log.Fatalf("Error opening bookmarks file %s\n%v", fs.AppConfig.BookmarksFile, err)
 	}
 	defer file.Close()
 
@@ -84,9 +85,9 @@ func removeBookmark() {
 		}
 	}
 
-	tmp := utils.AppConfig.BookmarksFile + ".tmp"
+	tmp := fs.AppConfig.BookmarksFile + ".tmp"
 	os.WriteFile(tmp, []byte(strings.Join(lines, "\n")+"\n"), 0644)
-	os.Rename(tmp, utils.AppConfig.BookmarksFile)
+	os.Rename(tmp, fs.AppConfig.BookmarksFile)
 }
 
 func addBookmark() {
@@ -101,16 +102,16 @@ func addBookmark() {
 	}
 
 	file, err := os.OpenFile(
-		utils.AppConfig.BookmarksFile,
+		fs.AppConfig.BookmarksFile,
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY,
 		0644,
 	)
 	if err != nil {
-		log.Fatalf("Error opening bookmarks file %s\n%v", utils.AppConfig.BookmarksFile, err)
+		log.Fatalf("Error opening bookmarks file %s\n%v", fs.AppConfig.BookmarksFile, err)
 	}
 	defer file.Close()
 
 	if _, err := file.WriteString(bookmark + "\n"); err != nil {
-		log.Fatalf("Error writing bookmark to file %s\n%v", utils.AppConfig.BookmarksFile, err)
+		log.Fatalf("Error writing bookmark to file %s\n%v", fs.AppConfig.BookmarksFile, err)
 	}
 }

@@ -1,4 +1,4 @@
-package utils
+package internal
 
 import (
 	"log"
@@ -13,13 +13,13 @@ const (
 func EarlyExit(process int) {
 	switch process {
 	case Wofi:
-		CheckWofi()
+		checkWofi()
 	case Hyprpaper:
-		CheckHyprpaper()
+		checkHyprpaper()
 	}
 }
 
-func CheckWofi() bool {
+func checkWofi() bool {
 
 	if err := exec.Command("pidof", "wofi").Run(); err == nil {
 		exec.Command("killall", "wofi").Run()
@@ -30,4 +30,4 @@ func CheckWofi() bool {
 	return false
 }
 
-func CheckHyprpaper() int { return 1 }
+func checkHyprpaper() int { return 1 }

@@ -1,7 +1,7 @@
 package hyprmodes
 
 import (
-	"github.com/yashodhanketkar/louarch/src/utils"
+	"github.com/yashodhanketkar/louarch/src/internal"
 )
 
 type OsMode = string
@@ -11,7 +11,7 @@ const (
 	NightMode OsMode = "night"
 )
 
-var Modes = utils.New(map[OsMode]func(){
-	GameMode:  toggleGM,
-	NightMode: toggleNM,
+var Modes = internal.New(map[OsMode]func(ctx *internal.Context){
+	GameMode:  func(ctx *internal.Context) { toggleGM() },
+	NightMode: func(ctx *internal.Context) { toggleNM() },
 })

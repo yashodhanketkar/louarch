@@ -1,4 +1,4 @@
-package utils
+package fs
 
 import (
 	"encoding/json"
@@ -19,7 +19,7 @@ func CreateFile(path string, args ...string) {
 	defer file.Close()
 }
 
-func readConfig(configPath string) {
+func ReadConfig(configPath string, AppConfig *Config) {
 	data, err := os.ReadFile(configPath)
 	if err != nil {
 		log.Fatalf("failed to open configuration file. %v", err)

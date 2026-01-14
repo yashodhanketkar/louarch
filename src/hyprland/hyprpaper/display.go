@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/yashodhanketkar/louarch/src/fs"
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
@@ -23,7 +24,7 @@ func listMonitors() []Monitor {
 }
 
 func listWallpapers() []string {
-	entries, err := os.ReadDir(utils.AppConfig.WallpaperDir)
+	entries, err := os.ReadDir(fs.AppConfig.WallpaperDir)
 	if err != nil {
 		log.Fatalf("failed to read wallpaper dir: %v", err)
 	}
@@ -92,6 +93,13 @@ func wallSwitcher() {
 		return
 	}
 
-	updateConfig(monitors, selected)
-	setupHyprpaper(selected[0])
+	wpDir := fs.AppConfig.WallpaperDir
+	updateConfig(monitors, selected, wpDir)
+	setupHyprpaper(selected[0], wpDir)
+}
+
+func setWallpaper(path string) {
+	wpDir, wallpaper := filepath.Split(path)
+	updateConfig(listMonitors(), []string{wallpaper}, wpDir)
+	setupHyprpaper(wallpaper, wpDir)
 }

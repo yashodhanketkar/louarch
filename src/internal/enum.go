@@ -1,4 +1,4 @@
-package utils
+package internal
 
 import (
 	"fmt"
@@ -6,16 +6,22 @@ import (
 )
 
 type StringEnum[T ~string] struct {
-	values map[T]func()
+	values map[T]func(*Context)
+	ctx    *Context
 }
 
-func New[T ~string](m map[T]func()) *StringEnum[T] {
+func New[T ~string](m map[T]func(*Context)) *StringEnum[T] {
 	return &StringEnum[T]{values: m}
+}
+
+func (e *StringEnum[T]) SetContext(ctx *Context) *StringEnum[T] {
+	e.ctx = ctx
+	return e
 }
 
 func (e *StringEnum[T]) Call(v T) error {
 	if fn, ok := e.values[v]; ok {
-		fn()
+		fn(e.ctx)
 		return nil
 	}
 

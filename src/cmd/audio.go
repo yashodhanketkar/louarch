@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/yashodhanketkar/louarch/src/internal"
 	"github.com/yashodhanketkar/louarch/src/shortcuts/audioswitcher"
-	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
 var audioMode audioswitcher.AudioType
@@ -13,7 +13,7 @@ var audioCmd = &cobra.Command{
 	Short: audioswitcher.ShortDesc,
 	Long:  audioswitcher.LongDesc,
 	PreRun: func(cmd *cobra.Command, args []string) {
-		utils.EarlyExit(utils.Wofi)
+		internal.EarlyExit(internal.Wofi)
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return audioswitcher.Modes.Call(audioMode)

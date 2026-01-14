@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/yashodhanketkar/louarch/src/cmd"
-	"github.com/yashodhanketkar/louarch/src/utils"
+	"github.com/yashodhanketkar/louarch/src/fs"
 )
 
 func main() {
-	utils.Configure()
+	fs.Configure()
 	cmd.Execute()
 }

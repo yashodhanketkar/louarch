@@ -1,38 +1,45 @@
 package hyprpaper
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
 
+	"github.com/yashodhanketkar/louarch/src/fs"
 	"github.com/yashodhanketkar/louarch/src/utils"
 )
 
-func updateConfig(monitors []Monitor, wallpapers []string) {
-	file, err := os.Create(utils.AppConfig.ConfigPath)
+func updateConfig(monitors []Monitor, wallpapers []string, wpDir string) {
+	file, err := os.Create(fs.AppConfig.ConfigPath)
 	if err != nil {
 		log.Fatalf("failed to write config: %v", err)
 	}
 	defer file.Close()
+	w := bufio.NewWriter(file)
+	defer w.Flush()
 
-	fmt.Fprintln(file, "ipc = true")
-	fmt.Fprint(file, "splash = false\n\n")
+	w.WriteString("ipc = true\n")
+	w.WriteString("splash = false\n\n")
 
 	for i, m := range monitors {
 		wp := wallpapers[i%len(wallpapers)]
-		fmt.Fprintf(file,
-			`wallpaper {
+		mName := ""
+		if i != 0 {
+			mName = m.Name
+		}
+		fmt.Fprintf(w, `wallpaper {
   monitor = %s
   path = %s/%s
 }
-`, m.Name, utils.AppConfig.WallpaperDir, wp)
+`, mName, wpDir, wp)
 	}
 }
 
-func setupHyprpaper(selected string) {
+func setupHyprpaper(selected string, wpDir string) {
 	restartHyprpaperProcess()
-	generateColorPallete(selected)
+	generateColorPallete(selected, wpDir)
 	setupTheme()
 }
 
@@ -42,9 +49,9 @@ func restartHyprpaperProcess() {
 	utils.CmdRunner("hyprctl", "dispatch", "exec", "hyprpaper")
 }
 
-func generateColorPallete(selected string) {
+func generateColorPallete(selected, wpDir string) {
 	// generate new color pallete from wallpaper of primary monitor
-	utils.CmdRunner("wallust", "run", "-q", "-u", utils.AppConfig.WallpaperDir+"/"+selected)
+	utils.CmdRunner("wallust", "run", "-q", "-u", wpDir+"/"+selected)
 }
 
 func setupTheme() {
