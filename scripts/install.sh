@@ -15,6 +15,7 @@ echo "Requirements met. Proceeding with installation..."
 # setting up directory path variables
 BASEPATHREPO=$(pwd)
 BASEPATHINSTALL=$HOME/.local/share/louarch
+BINPATH=/usr/bin/louarch
 
 # checking for previous installation
 # checks for existence of lib directory
@@ -28,6 +29,7 @@ if [[ -d $BASEPATHINSTALL ]]; then
   if [[ $yn == "y" ]]; then
     echo "Removing previous installation..."
     rm -rf $BASEPATHINSTALL
+    sudo rm /usr/bin/louarch
   else
     # abort installation
     echo "Installation aborted."
@@ -35,19 +37,15 @@ if [[ -d $BASEPATHINSTALL ]]; then
   fi
 fi
 
-# create installation directory
-mkdir -p $HOME/.local/share/louarch
+# create config directory
+install -dm 755 $BASEPATHINSTALL
 
-# copy config files
-if [[ ! -f $BASEPATHINSTALL/config.json ]]; then
-  cp -r $BASEPATHREPO/data/config.json $BASEPATHINSTALL/config.json
-fi
-
-# copy LICENSE and README.md
-cp -r $BASEPATHREPO/LICENSE $BASEPATHINSTALL/LICENSE
-cp -r $BASEPATHREPO/README.md $BASEPATHINSTALL/README.md
+# Installing config files
+install -m 644 $BASEPATHREPO/data/config.json $BASEPATHINSTALL/config.json
+install -m 644 $BASEPATHREPO/LICENSE $BASEPATHINSTALL/LICENSE
+install -m 644 $BASEPATHREPO/README.md $BASEPATHINSTALL/README.md
 
 # copy binary to users bin directory
-sudo cp -r $BASEPATHREPO/build/louarch /usr/bin/louarch
+sudo install -m 755 $BASEPATHREPO/target/release/louarchrs /usr/bin/louarch
 
 echo "Installation successful."

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Required versions
-REQUIRED_GO="1.25.5"
-REQUIRED_WOFI="1.5.1"
+REQUIRED_CARGO="1.90.0"
+REQUIRED_ROFI="2.0.0"
 REQUIRED_WALLUST="3.4.0"
 
 echo "Running requirements check..."
@@ -29,24 +29,24 @@ check_version() {
 
 fail=0
 
-# Check for go
-if command -v go >/dev/null 2>&1; then
+# Check for cargo
+if command -v cargo >/dev/null 2>&1; then
   sleep 0.1
-  go_version=$(go version | awk '{print $3}' | sed 's/go//')
-  check_version "GO" "$REQUIRED_GO" "$go_version" || fail=1
+  cargo_version=$(cargo --version | awk '{print $2}')
+  check_version "cargo" "$REQUIRED_CARGO" "$cargo_version" || fail=1
 else
-  echo "Go is not installed."
-  go_version="0"
+  echo "Cargo is not installed."
+  cargo_version="0"
 fi
 
 # Check for wofi
-if command -v wofi >/dev/null 2>&1; then
+if command -v rofi >/dev/null 2>&1; then
   sleep 0.1
-  wofi_version=$(wofi --version | awk '{print $1}' | tr -dc '0-9.')
-  check_version "Wofi" "$REQUIRED_WOFI" "$wofi_version" || fail=1
+  rofi_version=$(rofi -v | awk -F'[ -]' '{ print $2 }')
+  check_version "Rofi" "$REQUIRED_ROFI" "$rofi_version" || fail=1
 else
-  echo "Wofi is not installed."
-  wofi_version="0"
+  echo "Rofi is not installed."
+  rofi_version="0"
 fi
 
 # Check for wallust

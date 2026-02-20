@@ -1,38 +1,50 @@
-# INFO: Project variables
-.PHONY: run start build commit add test getcover cover clean
+# Define the project name (used for the final executable name in some cases)
+NAME := louarch
 
-default: run
+# Phony targets don't represent actual files, they are just names for commands
+.PHONY: all build run test clean
+default: help
 
-# INFO: Project commands
-run:
-	@go run . $(cmd)
+build:
+	@echo "Building Rust project..."
+	cargo build
 
-start:
-	@./build/louarch $(cmd)
+release:
+	@echo "Building Rust project in release mode..."
+	cargo build --release
 
-startclean: build
-	@./build/louarch $(cmd)
+run: build
+	@echo "Running the project..."
+	./target/debug/$(NAME)
 
-build: requirements
-	@go build -o ./build/louarch .
+test:
+	@echo "Running tests..."
+	cargo test
 
 clean:
-	@rm -rf ./build/
+	@echo "Cleaning build artifacts..."
+	cargo clean
 
-requirements:
-	@chmod +x ./scripts/check-requirements.sh
-	@./scripts/check-requirements.sh
+docs:
+	@echo "Building documentation..."
+	cargo doc --no-deps --document-private-items
 
-install: build
-	@chmod +x ./scripts/install.sh
-	@./scripts/install.sh
+install: release
+	@echo "Installing the project..."
+	./scripts/install.sh
 
 uninstall:
-	@chmod +x ./scripts/uninstall.sh
-	@./scripts/uninstall.sh
+	@echo "Uninstalling the project..."
+	./scripts/uninstall.sh
 
 help:
-	@echo "run       run the app"
-	@echo "start     build and run the app"
-	@echo "build     build the app"
-	@echo "clean     clean the build directory"
+	@echo "Usage: make [target]"
+	@echo "      all: Build the project"
+	@echo "    build: Build the project"
+	@echo "  release: Build the project in release mode"
+	@echo "      run: Run the project"
+	@echo "     test: Run the tests"
+	@echo "    clean: Clean the build artifacts"
+	@echo "     docs: Build the documentation"
+	@echo "     Install: Install the project"
+	@echo "   uninstall: Uninstall the project"

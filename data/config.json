@@ -1,8 +1,8 @@
 {
-  "Browser": "firefox",
-  "SearchEngine": "https://duckduckgo.com/html/?q=",
-  "WofiCmd": "wofi -W 600 -d -p",
-  "BookmarksFile": "$HOME/tmp/shortcuts.txt",
-  "WallpaperDir": "$HOME/Pictures/wallpapers",
-  "ConfigPath": "$HOME/.config/hypr/hyprpaper.conf"
+  "browser": "firefox",
+  "searchEngine": "https://duckduckgo.com/?q=",
+  "bookmarksFile": "$HOME/private/shortcuts.txt",
+  "wallpaperDir": "$HOME/Pictures/wallpapers/",
+  "hyprpaperPath": "$HOME/.config/hypr/hyprpaper.conf",
+  "dbPath": "$HOME/.cache/louarch/bookmarks.sqlite"
 }

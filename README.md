@@ -1,65 +1,45 @@
 Louarch
 =======
 
-Rewrite of bash script with golang for better debugging and single binary.
+Faster, safer and efficient rust port of louarch.
+
+Currently, this project is in development stage. Follwing features are planned:
+
+-	[X] Wallpaper switcher
+-	[X] OS Mode switcher
+-	[X] Audio switcher
+-	[X] Browser launcher
 
 Table of Contents
 -----------------
 
 -	[Usage](#usage)
-	-	[Audio](#audio)
 	-	[Wallpaper](#wallpaper)
-	-	[Browsing](#browsing)
+	-	[OS Mode](#os-mode)
 -	[Configuration](#configuration)
 	-	[Requirements](#requirements)
-	-	[Installation](#installation)
-	-	[Uninstallation](#uninstallation)
+	-	[Install](#install)
+	-	[Running](#running)
+	-	[Uninstall](#uninstall)
 -	[LICENSE](#license)
 
 Usage
 -----
 
-### Audio
-
-*Select audio devices*
-
-Select audio devices for your system This command will prompt user via wofi to select audio device based on currently available sources or sinks.
-
-cmd: `audio`
-
-| Flags            | Description            | Values       |
-|------------------|------------------------|--------------|
-| `-t` or `--type` | type of audio switcher | sink, source |
-
-### Browser
-
-*Browsing shortcuts*
-
-This command will provide user abiliy to search or visit websites with help of wofi and firefox browser. This command have two modes of operation:
-
-1.	Search mode: This mode will prompt user via wofi to search for a term. Based on the search term, it will open the search result in the firefox browser. Default search engine is duckduckgo.
-
-2.	Bookmarks mode: This mode will prompt user via wofi to select Bookmarks. Based on the selected bookmark, it will open the bookmark in the firefox browser. This booksmarks can be modified by the user inside wofi prompt using 'option' item. This will allow user to add or remove bookmarks.
-
-cmd: `browser`
-
-| Flags            | Description      | Values            |
-|------------------|------------------|-------------------|
-| `-m` or `--mode` | mode of browsing | search, bookmarks |
-
 ### Wallpaper
-
-*Wallpaper switcher*
 
 Update wallpaper and theme for personal linux configuration.
 
-This command will prompt user via wofi to select wallpaper based on the current monitors. Based on selected wallpapers, it will generate a theme pallete with help of wallust. Finally, it will apply theme colors to the UI tools such as waybar, sway-nc, etc. Configuration
+This command will prompt user via rofi to select wallpaper based on the current monitors. Based on selected wallpapers, it will generate a theme pallete with help of wallust. Finally, it will apply theme colors to the UI tools such as waybar, swaync, etc. Configuration
 
 cmd: `wallpaper`
 
-### OS Mode
+| Args   | Description                 |
+|--------|-----------------------------|
+| select | Select and apply wallpapers |
+| random | Apply a random wallpaper    |
 
-*Set operating system modes*
+### OS Mode
 
 Set operating system modes
 
@@ -75,38 +55,78 @@ cmd: `osmode [args]`
 | game  | toggle gaming mode                         |
 | night | toggle night-time or bluelight filter mode |
 
+### Audio
+
+Switch audio devices
+
+This command will allow user to switch between audio devices. Currently, two options are available:
+
+1.	Sink: This will allow user to set default audio sink. (Output device)
+2.	Source: This will allow user to set default audio source. (Input device)
+
+cmd: `audio [args]`
+
+| Args   | Description         |
+|--------|---------------------|
+| sink   | switch audio sink   |
+| source | switch audio source |
+
+### Browser
+
+Launch browser
+
+This command will allow user to launch a browser. Currently, two options are available:
+
+1.	Search: This will allow user to search for a term.
+2.	Browse: This will allow user to open a URL.
+
+cmd: `browser [args]`
+
+| Args   | Description       |
+|--------|-------------------|
+| search | search for a term |
+| browse | open a URL        |
+
 Configuration
 -------------
 
 ### Requirements
 
--	Go 1.23 or higher
--	Wofi 1.5.1 or higher
+-	Rustup/Cargo 1.90 or higher
+-	Rofi 2.0.0 or higher
 -	wallust 3.4.0 or higher
 -	GNU Make 4.4.1 (Optional)
 
-### Installation
+### Install
 
 Make sure you have above tools installed before proceeding with installation.
 
 ```bash
 # with make installed 
-make install
+make release
 
 # without make installed
-chmod a+x ./scripts/install.sh
-./scripts/install.sh
+cargo build --release
 ```
 
-### Uninstallation
+### Running
 
 ```sh
 # with make installed
-make uninstall
+make run
 
 # without make installed
-chmod a+x ./scripts/uninstall.sh
-./scripts/uninstall.sh
+./target/release/louarchrs
+```
+
+### Uninstall
+
+```sh
+# with make installed
+make clean
+
+# without make installed
+cargo clean
 ```
 
 LICENSE
