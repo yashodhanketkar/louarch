@@ -3,8 +3,6 @@
 mod config;
 mod system;
 
-use rusqlite::Connection;
-
 use crate::context::{config::AppConfig, system::SystemConfig};
 
 /// Central information store for the app
@@ -17,8 +15,6 @@ pub struct Context {
     pub system: SystemConfig,
     /// Application configuration
     pub config: AppConfig,
-    /// Database connection
-    pub db: Connection,
 }
 
 impl Context {
@@ -34,8 +30,7 @@ impl Context {
     pub fn new() -> anyhow::Result<Self> {
         let system = SystemConfig::load()?;
         let config = AppConfig::load()?;
-        let db = config.open_db()?;
 
-        Ok(Self { system, config, db })
+        Ok(Self { system, config })
     }
 }

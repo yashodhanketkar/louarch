@@ -1,8 +1,12 @@
 //! Handles browsing functionality
+use rusqlite::Connection;
+
 use crate::{
     context::Context,
     utils::exec::{rofi_prompt, run},
 };
+
+use crate::tools::browser::_internal::open_db;
 
 /// Browse a url or bookmark
 ///
@@ -16,15 +20,16 @@ use crate::{
 /// * user cancels
 /// * browser fails
 pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
-    let bookmarks = &get_bookmarks(&ctx, true)?;
+    let conn = open_db(&ctx.config.db_path)?;
+    let bookmarks = &get_bookmarks(&conn, true)?;
     let options: Vec<&str> = bookmarks.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
 
     let output = rofi_prompt("Open: ", &options, false)?
         .ok_or_else(|| anyhow::anyhow!("Url not found. Cancelling."))?;
 
     match output.as_str() {
-        "Add" => add_bookmark(&ctx),
-        "Remove" => remove_bookmark(&ctx),
+        "Add" => add_bookmark(&conn),
+        "Remove" => remove_bookmark(&conn),
         opts => {
             let (success, _) = run(&ctx.config.browser, &[opts])?;
             anyhow::ensure!(success, "Failed to open browser");
@@ -36,17 +41,16 @@ pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
 /// Add a bookmark to the database
 ///
 /// # Arguments
-/// * `ctx` - Context containing the configuration
+/// * `conn` - Database connection
 ///
 /// # Errors
 /// Returns an error
 /// * user cancels
 /// * bookmark already exists
 /// * failed to add bookmark
-fn add_bookmark(ctx: &Context) -> anyhow::Result<()> {
+fn add_bookmark(conn: &Connection) -> anyhow::Result<()> {
     let bookmark = rofi_prompt("Add: ", &[], false)?;
-    ctx.db
-        .execute("INSERT INTO bookmarks (url) VALUES (?1)", [&bookmark])?;
+    conn.execute("INSERT INTO bookmarks (url) VALUES (?1)", [&bookmark])?;
 
     Ok(())
 }
@@ -54,20 +58,19 @@ fn add_bookmark(ctx: &Context) -> anyhow::Result<()> {
 /// Delete a bookmark from database
 ///
 /// # Arguments
-/// * `ctx` - Context containing the configuration
+/// * `conn` - Database connection
 ///
 /// # Errors
 /// Returns an error
 /// * user cancels
 /// * bookmark doe not exists
 /// * failed to delete bookmark
-fn remove_bookmark(ctx: &Context) -> anyhow::Result<()> {
-    let bookmarks = &get_bookmarks(ctx, false)?;
+fn remove_bookmark(conn: &Connection) -> anyhow::Result<()> {
+    let bookmarks = &get_bookmarks(conn, false)?;
     let bookmarks_ref = &bookmarks.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
     let bookmark = rofi_prompt("Select to remove", &bookmarks_ref, true)?
         .ok_or_else(|| anyhow::anyhow!("No such bookmark found!. Cancelling."))?;
-    ctx.db
-        .execute("delete from bookmarks where url = (?1)", [bookmark])?;
+    conn.execute("delete from bookmarks where url = (?1)", [bookmark])?;
 
     Ok(())
 }
@@ -75,15 +78,16 @@ fn remove_bookmark(ctx: &Context) -> anyhow::Result<()> {
 /// Get bookmarks from database
 ///
 /// # Arguments
-/// * `ctx` - Context containing the configuration
+/// * `conn` - Database connection
 /// * `with_opts` - Whether to include options with the list
 ///
 /// # Errors
 /// Returns an error
 /// * failed to fetch bookmarks
-fn get_bookmarks(ctx: &Context, with_opts: bool) -> anyhow::Result<Vec<String>> {
-    let mut stmt = ctx.db.prepare("SELECT url FROM bookmarks")?;
+fn get_bookmarks(conn: &Connection, with_opts: bool) -> anyhow::Result<Vec<String>> {
+    let mut stmt = conn.prepare("SELECT url FROM bookmarks")?;
     let urls_iter = stmt.query_map([], |row| Ok(row.get(0)?))?;
+
     let mut urls = Vec::new();
     for url in urls_iter {
         urls.push(url?);

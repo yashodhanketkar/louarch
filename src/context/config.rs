@@ -7,7 +7,6 @@ use std::fs;
 use std::path::PathBuf;
 
 use anyhow::Ok;
-use rusqlite::Connection;
 use serde::Deserialize;
 
 /// Store for the application configuration
@@ -54,21 +53,6 @@ impl AppConfig {
         let config_file = fs::read_to_string(config_path.as_ref())?;
         let config: AppConfig = serde_json::from_str(&config_file)?;
         Ok(config)
-    }
-
-    /// Load the database connection
-    ///
-    /// # Arguments
-    /// * `self` - Application configuration
-    ///
-    /// # Errors
-    /// Returns an error if
-    /// * the database cannot be opened
-    /// * initialization fails
-    pub fn open_db(&self) -> anyhow::Result<Connection> {
-        let conn = Connection::open(&self.db_path)?;
-        init_db(&conn)?;
-        Ok(conn)
     }
 }
 
@@ -118,25 +102,4 @@ fn resolve_path(input: &str) -> anyhow::Result<PathBuf> {
     }
 
     Ok(path)
-}
-
-/// Initialize the database
-///
-/// This function creates the database tables if they do not exist.
-///
-/// # Arguments
-/// * `conn` - Database connection
-///
-/// # Errors
-/// Returns an error if table fails to be created
-pub(crate) fn init_db(conn: &Connection) -> anyhow::Result<()> {
-    conn.execute(
-        "CREATE TABLE IF NOT EXISTS bookmarks (
-        id INTEGER PRIMARY KEY,
-        url TEXT NOT NULL UNIQUE
-        );",
-        (),
-    )?;
-
-    Ok(())
 }

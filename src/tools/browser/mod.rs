@@ -6,6 +6,7 @@ use crate::{
     utils::{cli::Browser, exec::is_installed},
 };
 
+mod _internal;
 mod browse;
 mod search;
 
