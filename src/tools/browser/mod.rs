@@ -32,7 +32,7 @@ pub fn handler(ctx: &Context, action: Browser) -> anyhow::Result<()> {
     }
 
     match action {
-        Browser::Search => search::handle(&ctx),
-        Browser::Browse => browse::handle(&ctx),
+        Browser::Search => search::handle(ctx),
+        Browser::Browse => browse::handle(ctx),
     }
 }

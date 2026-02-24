@@ -18,6 +18,7 @@ mod zsh;
 ///
 /// # Arguments
 /// * `action` - Shell to generate completions for
+/// * `silent` - Whether to print the completions to stdout
 ///
 /// # Requirements
 /// * clap must be installed
@@ -28,11 +29,11 @@ mod zsh;
 /// * clap is not installed
 /// * clap_complete is not installed
 /// * shell is not supported
-pub fn handler(action: Shell) -> anyhow::Result<()> {
+pub fn handler(action: Shell, silent: bool) -> anyhow::Result<()> {
     let path = _internal::ensure_completions_dir(&shellexpand::full("~/.cache/louarch")?)?;
     match action {
-        Shell::Bash => bash::handle(path)?,
-        Shell::Zsh => zsh::handle(path)?,
+        Shell::Bash => bash::handle(path, silent)?,
+        Shell::Zsh => zsh::handle(path, silent)?,
         _ => anyhow::bail!("Unsupported shell"),
     };
 

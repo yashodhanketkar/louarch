@@ -29,17 +29,17 @@ use crate::utils::exec::run;
 /// * hyprsunset fails to run
 pub(crate) fn toggle(ctx: &Context) -> anyhow::Result<()> {
     if ctx.system.night_mode_status {
-        run("killall", &[&"hyprsunset"])?;
+        run("killall", ["hyprsunset"])?;
         return Ok(());
     }
 
-    let (success, _) = run("hyprctl", &[&"dispatch", &"exec", &"hyprsunset"])?;
+    let (success, _) = run("hyprctl", ["dispatch", "exec", "hyprsunset"])?;
 
     if !success {
         anyhow::bail!("hyprsunset not found");
     }
 
     sleep(Duration::from_millis(100));
-    run("hyprctl", &[&"hyprsunset", &"temperature", &"4500"])?;
+    run("hyprctl", ["hyprsunset", "temperature", "4500"])?;
     Ok(())
 }

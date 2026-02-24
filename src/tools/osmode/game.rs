@@ -54,8 +54,8 @@ fn on() -> anyhow::Result<()> {
     keyword general:gaps_in 0;
     keyword general:gaps_out 0;
     keyword general:border_size 0;";
-    run("hyprctl", &[&"--quiet", &"--batch", &commands])?;
-    send(Hint, Green, &"Turned on game mode")?;
+    run("hyprctl", ["--quiet", "--batch", commands])?;
+    send(Hint, Green, "Turned on game mode")?;
     Ok(())
 }
 
@@ -69,7 +69,7 @@ fn on() -> anyhow::Result<()> {
 /// # Errors
 /// Returns an error if hyprctl results in an error
 fn off() -> anyhow::Result<()> {
-    run("hyprctl", &[&"--quiet", &"reload"])?;
-    send(Hint, Red, &"Turned off game mode")?;
+    run("hyprctl", ["--quiet", "reload"])?;
+    send(Hint, Red, "Turned off game mode")?;
     Ok(())
 }

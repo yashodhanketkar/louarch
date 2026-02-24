@@ -59,7 +59,7 @@ impl NotifyColor {
 pub fn send(icon: NotifyType, color: NotifyColor, msg: &str) -> anyhow::Result<()> {
     run(
         "hyprctl",
-        &["notify", icon.as_str(), "5000", color.as_str(), msg],
+        ["notify", icon.as_str(), "5000", color.as_str(), msg],
     )?;
     Ok(())
 }

@@ -71,7 +71,7 @@ impl SystemConfig {
 /// * `hyprctl` fails to run
 /// * output can not be parsed
 fn list_monitors() -> anyhow::Result<Vec<String>> {
-    let output = Command::new("hyprctl").args(&["monitors", "-j"]).output()?;
+    let output = Command::new("hyprctl").args(["monitors", "-j"]).output()?;
 
     let json: serde_json::Value = serde_json::from_slice(&output.stdout)?;
     let names = json
@@ -104,7 +104,7 @@ fn list_monitors() -> anyhow::Result<Vec<String>> {
 /// * output can not be parsed
 fn check_game_mode() -> anyhow::Result<bool> {
     let output = Command::new("hyprctl")
-        .args(&[&"getoption", &"animations:enabled"])
+        .args(["getoption", "animations:enabled"])
         .output()?;
     let status = String::from_utf8(output.stdout)?.trim().to_string();
     Ok(!status.contains("int: 1"))
@@ -129,12 +129,12 @@ fn check_game_mode() -> anyhow::Result<bool> {
 /// * hyprsunset is not installed
 /// * output can not be parsed
 fn check_night_mode() -> anyhow::Result<bool> {
-    Ok(run("pidof", &[&"hyprsunset"])?.0)
+    Ok(run("pidof", ["hyprsunset"])?.0)
 }
 
 fn audio_default_devices() -> anyhow::Result<AudioDevices> {
     let get_pactl = |arg: &str| -> anyhow::Result<String> {
-        let (success, output) = run("pactl", &[arg])?;
+        let (success, output) = run("pactl", [arg])?;
         if !success {
             anyhow::bail!("pactl failed: {}", output);
         }

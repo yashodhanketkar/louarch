@@ -39,6 +39,9 @@ pub enum Command {
     Completions {
         #[arg(value_enum)]
         action: Shell,
+
+        #[arg(short, long)]
+        silent: bool,
     },
 }
 

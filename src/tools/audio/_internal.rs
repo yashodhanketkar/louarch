@@ -45,7 +45,7 @@ pub(crate) fn select_device(
             let _ = notify::send(
                 notify::NotifyType::Error,
                 notify::NotifyColor::Red,
-                &cancel_msg,
+                cancel_msg,
             );
             anyhow::bail!(cancel_msg.to_string());
         }
@@ -61,7 +61,7 @@ pub(crate) fn select_device(
         return Ok(());
     }
 
-    exec::run("pactl", &[set_arg, selected.as_str()])?;
+    exec::run("pactl", [set_arg, selected.as_str()])?;
 
     notify::send(
         notify::NotifyType::Ok,
@@ -85,7 +85,7 @@ pub(crate) fn select_device(
 /// # Errors
 /// Returns an error if pactl fails
 fn get_available(list_arg: &str, extra_filter: Option<&str>) -> anyhow::Result<Vec<String>> {
-    let (success, output) = exec::run("pactl", &["list", list_arg])?;
+    let (success, output) = exec::run("pactl", ["list", list_arg])?;
     if !success {
         anyhow::bail!("pactl failed: {}", output);
     }

@@ -17,8 +17,8 @@ use crate::tools::wallpaper::{
 /// # Errors
 /// Returns an error if randomizer or orchestrator fails
 pub(crate) fn switch(ctx: &Context) -> anyhow::Result<()> {
-    let imgs = randomizer(&ctx)?;
-    orchestrator(&ctx, &imgs)?;
+    let imgs = randomizer(ctx)?;
+    orchestrator(ctx, &imgs)?;
     Ok(())
 }
 

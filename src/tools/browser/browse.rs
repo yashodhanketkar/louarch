@@ -31,7 +31,7 @@ pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
         "Add" => add_bookmark(&conn),
         "Remove" => remove_bookmark(&conn),
         opts => {
-            let (success, _) = run(&ctx.config.browser, &[opts])?;
+            let (success, _) = run(&ctx.config.browser, [opts])?;
             anyhow::ensure!(success, "Failed to open browser");
             Ok(())
         }
@@ -68,7 +68,7 @@ fn add_bookmark(conn: &Connection) -> anyhow::Result<()> {
 fn remove_bookmark(conn: &Connection) -> anyhow::Result<()> {
     let bookmarks = &get_bookmarks(conn, false)?;
     let bookmarks_ref = &bookmarks.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
-    let bookmark = rofi_prompt("Select to remove", &bookmarks_ref, true)?
+    let bookmark = rofi_prompt("Select to remove", bookmarks_ref, true)?
         .ok_or_else(|| anyhow::anyhow!("No such bookmark found!. Cancelling."))?;
     conn.execute("delete from bookmarks where url = (?1)", [bookmark])?;
 
@@ -86,7 +86,7 @@ fn remove_bookmark(conn: &Connection) -> anyhow::Result<()> {
 /// * failed to fetch bookmarks
 fn get_bookmarks(conn: &Connection, with_opts: bool) -> anyhow::Result<Vec<String>> {
     let mut stmt = conn.prepare("SELECT url FROM bookmarks")?;
-    let urls_iter = stmt.query_map([], |row| Ok(row.get(0)?))?;
+    let urls_iter = stmt.query_map([], |row| row.get(0))?;
 
     let mut urls = Vec::new();
     for url in urls_iter {

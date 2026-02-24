@@ -24,7 +24,7 @@ pub(crate) fn switch(ctx: &Context) -> anyhow::Result<()> {
 
     let selected = display(ctx)?;
 
-    orchestrator(&ctx, &selected)?;
+    orchestrator(ctx, &selected)?;
     Ok(())
 }
 
@@ -43,7 +43,7 @@ pub(crate) fn switch(ctx: &Context) -> anyhow::Result<()> {
 fn display(ctx: &Context) -> anyhow::Result<Vec<String>> {
     let wps = pathbuf_to_string(list_images(&ctx.config.wallpaper_dir)?);
     let opts = wps.iter().map(|s| s.as_str()).collect();
-    let selected = choose_wallpaper(&ctx, opts)?;
+    let selected = choose_wallpaper(ctx, opts)?;
     Ok(selected)
 }
 

@@ -22,9 +22,10 @@ use std::fmt::Write;
 /// * the wallpapers directory cannot be found
 /// * any process fails such as `hyprpaper`, `wallust`, etc.
 pub(crate) fn orchestrator(ctx: &Context, selected: &Vec<String>) -> anyhow::Result<()> {
-    let imgs = format_image(&ctx, &selected)?;
-    write_hyprpaper_config(&ctx, &imgs)?;
-    pallete_generator(&imgs[0])?;
+    let imgs = format_image(ctx, selected)?;
+    let primary_wallpaper = &imgs[0];
+    write_hyprpaper_config(ctx, &imgs)?;
+    pallete_generator(primary_wallpaper)?;
     apply_theme()?;
     Ok(())
 }
@@ -41,12 +42,12 @@ pub(crate) fn orchestrator(ctx: &Context, selected: &Vec<String>) -> anyhow::Res
 ///
 /// # Errors
 /// Returns an error if writer fails
-fn write_hyprpaper_config(ctx: &Context, imgs: &Vec<String>) -> anyhow::Result<()> {
+fn write_hyprpaper_config(ctx: &Context, imgs: &[String]) -> anyhow::Result<()> {
     let mut content = String::from("ipc=true\nsplash=false\n\n");
 
     for (i, monitor) in ctx.system.monitors.iter().enumerate() {
         let wallpaper = &imgs[i % imgs.len()];
-        writer(&mut content, &monitor, &wallpaper)?;
+        writer(&mut content, monitor, wallpaper)?;
     }
 
     writer(&mut content, "", &imgs[0])?;
@@ -93,7 +94,7 @@ fn writer(content: &mut String, monitor: &str, wallpaper: &str) -> anyhow::Resul
 /// # Errors
 /// Returns an error if the command fails
 fn pallete_generator(main_wallpaper: &str) -> anyhow::Result<()> {
-    let (ok, output) = exec::run("wallust", &[&"run", &"-q", &"-u", &main_wallpaper])?;
+    let (ok, output) = exec::run("wallust", ["run", "-q", "-u", main_wallpaper])?;
 
     if !ok {
         anyhow::bail!("wallust failed: {}", output);
@@ -126,36 +127,36 @@ fn apply_theme() -> anyhow::Result<()> {
 
     // handles wallpaper application
     if is_installed("hyprpaper") {
-        let _ = exec::run("pkill", &[&"hyprpaper"]);
-        check(exec::run("hyprctl", &[&"dispatch", &"exec", &"hyprpaper"])?)?;
+        let _ = exec::run("pkill", ["hyprpaper"]);
+        check(exec::run("hyprctl", ["dispatch", "exec", "hyprpaper"])?)?;
     }
 
     // handles waybar colorscheme
     if is_installed("waybar") {
-        let _ = exec::run("pkill", &[&"waybar"]);
-        check(exec::run("hyprctl", &[&"dispatch", &"exec", &"waybar"])?)?;
+        let _ = exec::run("pkill", ["waybar"]);
+        check(exec::run("hyprctl", ["dispatch", "exec", "waybar"])?)?;
     }
 
     // handles swaync colorscheme
     if is_installed("swaync") {
-        let (swaync_running, _) = exec::run("pidof", &[&"swaync"])?;
+        let (swaync_running, _) = exec::run("pidof", ["swaync"])?;
         if !swaync_running {
-            check(exec::run("hyprctl", &[&"dispatch", &"exec", &"swaync"])?)?;
+            check(exec::run("hyprctl", ["dispatch", "exec", "swaync"])?)?;
         }
-        check(exec::run("swaync-client", &[&"-rs"])?)?;
+        check(exec::run("swaync-client", ["-rs"])?)?;
     }
 
     // handles tmux colorscheme
     if is_installed("tmux") {
         let tmux_config = shellexpand::full("{}/.config/tmux/colors.conf")?;
-        let _ = exec::run("tmux", &[&"source-file", &tmux_config.as_ref()]);
+        let _ = exec::run("tmux", ["source-file", tmux_config.as_ref()]);
     }
 
     // handles kitty colorscheme
     if is_installed("kitty") {
-        let (kitty_running, _) = exec::run("pgrep", &[&"kitty"])?;
+        let (kitty_running, _) = exec::run("pgrep", ["kitty"])?;
         if kitty_running {
-            check(exec::run("pkill", &[&"-USR1", &"kitty"])?)?;
+            check(exec::run("pkill", ["-USR1", "kitty"])?)?;
         }
     }
 

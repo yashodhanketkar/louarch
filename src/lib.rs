@@ -26,7 +26,7 @@ pub fn run(cli: Cli) -> anyhow::Result<()> {
         Command::Osmode { action } => osmode::handler(&ctx, action)?,
         Command::Audio { action } => audio::handler(&ctx, action)?,
         Command::Browser { action } => browser::handler(&ctx, action)?,
-        Command::Completions { action } => completions::handler(action)?,
+        Command::Completions { action, silent } => completions::handler(action, silent)?,
     }
 
     Ok(())
