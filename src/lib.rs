@@ -4,7 +4,7 @@ pub mod tools;
 pub mod utils;
 
 use crate::context::Context;
-use tools::{audio, browser, completions, osmode, wallpaper};
+use tools::{audio, browser, completions, network, osmode, wallpaper};
 use utils::cli::{Cli, Command};
 
 /// Entry point for the application
@@ -26,6 +26,7 @@ pub fn run(cli: Cli) -> anyhow::Result<()> {
         Command::Osmode { action } => osmode::handler(&ctx, action)?,
         Command::Audio { action } => audio::handler(&ctx, action)?,
         Command::Browser { action } => browser::handler(&ctx, action)?,
+        Command::Network { action } => network::handler(&ctx, action)?,
         Command::Completions { action, silent } => completions::handler(action, silent)?,
     }
 

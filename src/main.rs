@@ -1,7 +1,7 @@
 use clap::Parser;
 
-use louarchrs::run;
-use louarchrs::utils::cli::Cli;
+use louarch::run;
+use louarch::utils::cli::Cli;
 
 fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();

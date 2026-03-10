@@ -32,6 +32,10 @@ pub enum Command {
         #[command(subcommand)]
         action: Audio,
     },
+    Network {
+        #[command(subcommand)]
+        action: Network,
+    },
     Browser {
         #[command(subcommand)]
         action: Browser,
@@ -79,4 +83,35 @@ pub enum Browser {
     Search,
     /// Open a URL
     Browse,
+}
+
+/// Set of subcommands for newtork actions
+#[derive(Subcommand, Debug)]
+pub enum Network {
+    /// Select a WiFi device
+    Wifi {
+        #[command(subcommand)]
+        action: WifiAction,
+    },
+    /// Select a bluetooth device
+    Bluetooth {
+        #[command(subcommand)]
+        action: BluetoothAction,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+pub enum WifiAction {
+    /// Connect to a WiFi network
+    Connect,
+    /// Connect to a WiFi network
+    Disconnect,
+}
+
+#[derive(Subcommand, Debug)]
+pub enum BluetoothAction {
+    /// Connect to a WiFi network
+    Connect,
+    /// Connect to a WiFi network
+    Disconnect,
 }

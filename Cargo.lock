@@ -270,7 +270,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "louarchrs"
+name = "louarch"
 version = "0.1.0"
 dependencies = [
  "anyhow",

@@ -11,5 +11,6 @@
 pub mod audio;
 pub mod browser;
 pub mod completions;
+pub mod network;
 pub mod osmode;
 pub mod wallpaper;
