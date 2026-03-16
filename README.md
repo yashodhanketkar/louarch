@@ -5,17 +5,24 @@ Faster, safer and efficient rust port of louarch.
 
 Currently, this project is in development stage. Follwing features are planned:
 
--	[X] Wallpaper switcher
--	[X] OS Mode switcher
 -	[X] Audio switcher
 -	[X] Browser launcher
+-	[X] Network switcher
+-	[X] OS Mode switcher
+-	[X] Tmux
+-	[X] Wallpaper switcher
 
 Table of Contents
 -----------------
 
 -	[Usage](#usage)
-	-	[Wallpaper](#wallpaper)
+	-	[Audio](#audio)
+	-	[Browser](#browser)
+	-	[Completions](#completions)
+	-	[Network](#network)
 	-	[OS Mode](#os-mode)
+	-	[Tmux](#tmux)
+	-	[Wallpaper](#wallpaper)
 -	[Configuration](#configuration)
 	-	[Requirements](#requirements)
 	-	[Install](#install)
@@ -25,35 +32,6 @@ Table of Contents
 
 Usage
 -----
-
-### Wallpaper
-
-Update wallpaper and theme for personal linux configuration.
-
-This command will prompt user via rofi to select wallpaper based on the current monitors. Based on selected wallpapers, it will generate a theme pallete with help of wallust. Finally, it will apply theme colors to the UI tools such as waybar, swaync, etc. Configuration
-
-cmd: `wallpaper`
-
-| Args   | Description                 |
-|--------|-----------------------------|
-| select | Select and apply wallpapers |
-| random | Apply a random wallpaper    |
-
-### OS Mode
-
-Set operating system modes
-
-This command will allow user to toggle between system modes. Currently, there are two modes available:
-
-1.	Game mode: This mode will disable bluring, animation, etc. to give user more performance.
-2.	Night mode: This mode will enable night light/bluelight filter to give user more comfortable viewing.
-
-cmd: `osmode [args]`
-
-| Args  | Description                                |
-|-------|--------------------------------------------|
-| game  | toggle gaming mode                         |
-| night | toggle night-time or bluelight filter mode |
 
 ### Audio
 
@@ -87,6 +65,79 @@ cmd: `browser [args]`
 | search | search for a term |
 | browse | open a URL        |
 
+### Completions
+
+Completions for bash and zsh
+
+This command will allow user to generate completions for bash and zsh. Currently, two shells are supported.
+
+1.	Bash: This will generate completions for bash.
+2.	Zsh: This will generate completions for zsh.
+
+cmd: `completions [args]`
+
+| Args | Description         |
+|------|---------------------|
+| bash | generate bash comps |
+| zsh  | generate zsh comps  |
+
+### Network
+
+Toggle connected devices/networks
+
+This command will allow user to handle devices/networks connections. Currently supports WiFi and bluetooth.
+
+cmd: `network [args] [sub-args]`
+
+| Args      | Sub        | Description                        |
+|-----------|------------|------------------------------------|
+| wifi      | connect    | connect to a wifi network          |
+| wifi      | disconnect | disconnect from a wifi network     |
+| bluetooth | connect    | connect to a bluetooth device      |
+| bluetooth | disconnect | disconnect from a bluetooth device |
+
+### OS Mode
+
+Set operating system modes
+
+This command will allow user to toggle between system modes. Currently, there are two modes available:
+
+1.	Game mode: This mode will disable bluring, animation, etc. to give user more performance.
+2.	Night mode: This mode will enable night light/bluelight filter to give user more comfortable viewing.
+
+cmd: `osmode [args]`
+
+| Args  | Description                                |
+|-------|--------------------------------------------|
+| game  | toggle gaming mode                         |
+| night | toggle night-time or bluelight filter mode |
+
+### Tmux
+
+Connect or kill tmux sessions
+
+This command will allow user to connect (if exists or spawns) or kill tmux sessions.
+
+cmd: `tmux [args]`
+
+| Args   | Description              |
+|--------|--------------------------|
+| attach | attach to a tmux session |
+| kill   | kill a tmux session      |
+
+### Wallpaper
+
+Update wallpaper and theme for personal linux configuration.
+
+This command will prompt user via rofi to select wallpaper based on the current monitors. Based on selected wallpapers, it will generate a theme pallete with help of wallust. Finally, it will apply theme colors to the UI tools such as waybar, swaync, etc. Configuration
+
+cmd: `wallpaper`
+
+| Args   | Description                 |
+|--------|-----------------------------|
+| select | Select and apply wallpapers |
+| random | Apply a random wallpaper    |
+
 Configuration
 -------------
 
@@ -116,7 +167,7 @@ cargo build --release
 make run
 
 # without make installed
-./target/release/louarchrs
+./target/release/louarch
 ```
 
 ### Uninstall

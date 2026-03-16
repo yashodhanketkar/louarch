@@ -13,4 +13,5 @@ pub mod browser;
 pub mod completions;
 pub mod network;
 pub mod osmode;
+pub mod tmux;
 pub mod wallpaper;

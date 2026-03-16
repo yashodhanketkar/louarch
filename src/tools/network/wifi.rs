@@ -84,8 +84,9 @@ fn apply(device: String) -> anyhow::Result<()> {
 /// * user cancels selection
 /// * no networks found
 fn select(devices: &[String]) -> anyhow::Result<String> {
-    let device_refs: Vec<&str> = devices.iter().map(String::as_str).collect();
-    match rofi_prompt("Select wifi device", &device_refs, true)? {
+    // let device_refs: Vec<&str> = devices.iter().map(String::as_str).collect();
+    // match rofi_prompt("Select wifi device", &device_refs, true)? {
+    match rofi_prompt("Select wifi device", devices, true)? {
         Some(s) => Ok(s),
         None => anyhow::bail!("Selection cancelled"),
     }

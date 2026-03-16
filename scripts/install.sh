@@ -6,8 +6,8 @@ echo "Checking system requirements..."
 sleep 0.5
 ./scripts/check-requirements.sh
 if [ $? -ne 0 ]; then
-  echo "Installation aborted due to unmet dependencies."
-  exit 1
+    echo "Installation aborted due to unmet dependencies."
+    exit 1
 fi
 
 echo "Requirements met. Proceeding with installation..."
@@ -24,17 +24,17 @@ BINPATH=/usr/bin/louarch
 # ? remove and proceed
 # : abort installation
 if [[ -d $BASEPATHINSTALL ]]; then
-  echo "Previous installation detected."
-  read -p "Do you want remove previous installation and proceed? (y/n) " yn
-  if [[ $yn == "y" ]]; then
-    echo "Removing previous installation..."
-    rm -rf $BASEPATHINSTALL
-    sudo rm /usr/bin/louarch
-  else
-    # abort installation
-    echo "Installation aborted."
-    exit 0
-  fi
+    echo "Previous installation detected."
+    read -p "Do you want remove previous installation and proceed? (y/n) " yn
+    if [[ $yn == "y" ]]; then
+        echo "Removing previous installation..."
+        rm -rf $BASEPATHINSTALL
+        sudo rm /usr/bin/louarch
+    else
+        # abort installation
+        echo "Installation aborted."
+        exit 0
+    fi
 fi
 
 # create config directory
@@ -46,6 +46,6 @@ install -m 644 $BASEPATHREPO/LICENSE $BASEPATHINSTALL/LICENSE
 install -m 644 $BASEPATHREPO/README.md $BASEPATHINSTALL/README.md
 
 # copy binary to users bin directory
-sudo install -m 755 $BASEPATHREPO/target/release/louarchrs /usr/bin/louarch
+sudo install -m 755 $BASEPATHREPO/target/release/louarch /usr/bin/louarch
 
 echo "Installation successful."

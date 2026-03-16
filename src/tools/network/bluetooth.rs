@@ -107,7 +107,7 @@ fn apply(device: &BluetoothDevice) -> anyhow::Result<()> {
 /// * no devices found
 fn select(devices: &[BluetoothDevice]) -> anyhow::Result<&BluetoothDevice> {
     let device_refs: Vec<&str> = devices.iter().map(|s| s.get_name()).collect();
-    let output = rofi_prompt("Select bluetooth device", &device_refs, true)?;
+    let output = rofi_prompt("Select bluetooth device", device_refs, true)?;
     let name = output.ok_or_else(|| anyhow::anyhow!("Selection cancelled"))?;
 
     let device = devices

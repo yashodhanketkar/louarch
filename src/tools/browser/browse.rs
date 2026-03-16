@@ -22,9 +22,7 @@ use crate::tools::browser::_internal::open_db;
 pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
     let conn = open_db(&ctx.config.db_path)?;
     let bookmarks = &get_bookmarks(&conn, true)?;
-    let options: Vec<&str> = bookmarks.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
-
-    let output = rofi_prompt("Open: ", &options, false)?
+    let output = rofi_prompt("Open: ", bookmarks, false)?
         .ok_or_else(|| anyhow::anyhow!("Url not found. Cancelling."))?;
 
     match output.as_str() {
@@ -49,7 +47,7 @@ pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
 /// * bookmark already exists
 /// * failed to add bookmark
 fn add_bookmark(conn: &Connection) -> anyhow::Result<()> {
-    let bookmark = rofi_prompt("Add: ", &[], false)?;
+    let bookmark = rofi_prompt("Add: ", std::iter::empty::<&str>(), false)?;
     conn.execute("INSERT INTO bookmarks (url) VALUES (?1)", [&bookmark])?;
 
     Ok(())
@@ -67,8 +65,9 @@ fn add_bookmark(conn: &Connection) -> anyhow::Result<()> {
 /// * failed to delete bookmark
 fn remove_bookmark(conn: &Connection) -> anyhow::Result<()> {
     let bookmarks = &get_bookmarks(conn, false)?;
-    let bookmarks_ref = &bookmarks.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
-    let bookmark = rofi_prompt("Select to remove", bookmarks_ref, true)?
+    // let bookmarks_ref = &bookmarks.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
+    // let bookmark = rofi_prompt("Select to remove", bookmarks_ref, true)?
+    let bookmark = rofi_prompt("Select to remove", bookmarks, true)?
         .ok_or_else(|| anyhow::anyhow!("No such bookmark found!. Cancelling."))?;
     conn.execute("delete from bookmarks where url = (?1)", [bookmark])?;
 

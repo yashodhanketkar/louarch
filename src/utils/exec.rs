@@ -34,6 +34,32 @@ where
     Ok((status, message))
 }
 
+/// Run a shell commands
+///
+/// This function will run a shell command.
+///
+/// # Arguments
+/// * `cmd` - Command to run
+/// * `args` - Arguments to pass to the command
+pub fn cmd_run<I, S>(cmd: &str, args: I) -> anyhow::Result<()>
+where
+    I: IntoIterator<Item = S>,
+    S: AsRef<OsStr>,
+{
+    let status = Command::new(cmd)
+        .args(args)
+        .stdin(Stdio::inherit())
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
+        .status()?;
+
+    if !status.success() {
+        anyhow::bail!("Command `{}` failed with {}", cmd, status);
+    }
+
+    Ok(())
+}
+
 /// Prompt factory for rofi
 ///
 /// Takes a prompt and a list of options and displays the prompt to the user.
@@ -49,27 +75,33 @@ where
 ///
 /// # Errors
 /// Returns an error if rofi fails
-pub fn rofi_prompt(
+pub fn rofi_prompt<I, S>(
     prompt: &str,
-    options: &[&str],
+    options: I,
     no_custom: bool,
-) -> anyhow::Result<Option<String>> {
+) -> anyhow::Result<Option<String>>
+where
+    I: IntoIterator<Item = S>,
+    S: AsRef<str>,
+{
     let config_path = shellexpand::full("~/.config/rofi/prompt.rasi")?.to_string();
-    let mut args: Vec<&str> = vec!["-dmenu", "-config", &config_path, "-p", prompt];
+    // let mut args: Vec<&str> = vec!["-dmenu", "-config", &config_path, "-p", prompt];
+    let mut cmd = Command::new("rofi");
+    cmd.args(["-dmenu", "-config"]);
+    cmd.arg(&config_path);
+    cmd.args(["-p", prompt]);
 
     if no_custom {
-        args.push("-no-custom");
+        cmd.arg("-no-custom");
     }
 
-    let mut child = Command::new("rofi")
-        .args(args)
-        .stdin(Stdio::piped())
-        .stdout(Stdio::piped())
-        .spawn()?;
+    let mut child = cmd.stdin(Stdio::piped()).stdout(Stdio::piped()).spawn()?;
 
     if let Some(mut stdin) = child.stdin.take() {
-        let input = options.join("\n");
-        stdin.write_all(input.as_bytes())?;
+        for opts in options {
+            stdin.write_all(opts.as_ref().as_bytes())?;
+            stdin.write_all(b"\n")?;
+        }
     }
 
     let output = child.wait_with_output()?;

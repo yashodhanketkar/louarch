@@ -6,7 +6,6 @@
 use std::fs;
 use std::path::PathBuf;
 
-use anyhow::Ok;
 use serde::Deserialize;
 
 /// Store for the application configuration
@@ -36,6 +35,10 @@ pub struct AppConfig {
     /// database path
     #[serde(deserialize_with = "deserialize_path")]
     pub db_path: PathBuf,
+
+    /// tmux configuration path
+    #[serde(deserialize_with = "deserialize_vec_path")]
+    pub tmux_dirs: Vec<PathBuf>,
 }
 
 impl AppConfig {
@@ -74,6 +77,20 @@ where
 {
     let raw: String = Deserialize::deserialize(deserializer)?;
     resolve_path(&raw).map_err(serde::de::Error::custom)
+}
+
+/// Deserialize a path vector
+///
+/// Simialr to `deserialize_path` but for a vector of paths.
+fn deserialize_vec_path<'de, D>(deserializer: D) -> Result<Vec<PathBuf>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    let raws: Vec<String> = Deserialize::deserialize(deserializer)?;
+
+    raws.into_iter()
+        .map(|raw| resolve_path(&raw).map_err(serde::de::Error::custom))
+        .collect()
 }
 
 /// Get the absolute path

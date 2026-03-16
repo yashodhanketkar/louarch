@@ -75,7 +75,7 @@ fn choose_wallpaper(ctx: &Context, opts: Vec<&str>) -> anyhow::Result<Vec<String
             break;
         }
 
-        match rofi_prompt("Selcted more", &["No", "Yes"], true)? {
+        match rofi_prompt("Selcted more", ["No", "Yes"], true)? {
             Some(more) if more == "Yes" => continue,
             _ => break,
         }

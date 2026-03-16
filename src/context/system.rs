@@ -30,6 +30,8 @@ pub struct SystemConfig {
     pub audio_sink: String,
     /// Current audio source
     pub audio_source: String,
+    /// Current active tmux sessions
+    pub tmux_sessions: Vec<String>,
 }
 
 impl SystemConfig {
@@ -51,6 +53,7 @@ impl SystemConfig {
             night_mode_status: check_night_mode()?,
             audio_sink: audio_devices.sink,
             audio_source: audio_devices.source,
+            tmux_sessions: tmux_sessions()?,
         })
     }
 }
@@ -132,6 +135,21 @@ fn check_night_mode() -> anyhow::Result<bool> {
     Ok(run("pidof", ["hyprsunset"])?.0)
 }
 
+/// Get the default audio devices
+///
+/// This function will query the `pactl` API to determine the default audio
+/// devices. The output is parsed into a struct containing the names of the
+/// default audio devices.
+///
+/// # Requirements
+/// * pactl must be installed
+/// * must be inside a hyprland session
+///
+/// # Errors
+/// Returns an error if
+/// * pactl is not installed
+/// * `pactl` fails to run
+/// * output can not be parsed
 fn audio_default_devices() -> anyhow::Result<AudioDevices> {
     let get_pactl = |arg: &str| -> anyhow::Result<String> {
         let (success, output) = run("pactl", [arg])?;
@@ -145,4 +163,27 @@ fn audio_default_devices() -> anyhow::Result<AudioDevices> {
         source: get_pactl("get-default-source")?,
         sink: get_pactl("get-default-sink")?,
     })
+}
+
+/// Get the current running tmux sessions
+///
+/// This function will query the `tmux` API to determine the current running
+/// tmux sessions. The output is parsed into a vector of strings containing the
+/// names of the sessions.
+///
+/// # Requirements
+/// * tmux must be installed
+///
+/// # Errors
+/// Returns an error if
+/// * tmux is not installed
+/// * `tmux` fails to run
+/// * output can not be parsed
+fn tmux_sessions() -> anyhow::Result<Vec<String>> {
+    let (success, output) = run("tmux", ["list-sessions", "-F", "#S"])?;
+    if !success {
+        return Ok(Vec::new());
+    }
+    let sessions = output.split("\n").map(|s| s.to_string()).collect();
+    Ok(sessions)
 }

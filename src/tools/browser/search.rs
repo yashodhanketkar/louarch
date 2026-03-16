@@ -17,7 +17,7 @@ use crate::{
 /// * user cancels search
 /// * browser fails
 pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
-    let output = rofi_prompt("Search: ", &[], false)?;
+    let output = rofi_prompt("Search: ", std::iter::empty::<&str>(), false)?;
     if output.is_none() {
         anyhow::bail!("Search term not found. Cancelling search.");
     }

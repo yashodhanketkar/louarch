@@ -33,11 +33,7 @@ pub(crate) fn select_device(
     extra_filter: Option<&str>,
 ) -> anyhow::Result<()> {
     let available = get_available(list_arg, extra_filter)?;
-    let output = rofi_prompt(
-        prompt,
-        &available.iter().map(|s| s.as_str()).collect::<Vec<&str>>(),
-        true,
-    )?;
+    let output = rofi_prompt(prompt, available, true)?;
 
     let selected = match output {
         Some(s) => s,

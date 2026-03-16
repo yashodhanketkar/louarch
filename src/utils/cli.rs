@@ -1,7 +1,7 @@
 //! Handles the CLI
 //!
-//! This module contains the CLI struct which is the central
-//! action methods available to the user.
+//! This module contains the CLI structure and the
+//! command methods available to the user.
 use clap::{Parser, Subcommand};
 use clap_complete::Shell;
 
@@ -40,6 +40,11 @@ pub enum Command {
         #[command(subcommand)]
         action: Browser,
     },
+    Tmux {
+        #[command(subcommand)]
+        action: Tmux,
+    },
+    /// Set of subcommands for completion actions
     Completions {
         #[arg(value_enum)]
         action: Shell,
@@ -52,7 +57,7 @@ pub enum Command {
 /// Set of subcommands for wallpaper actions
 #[derive(Subcommand, Debug)]
 pub enum Wallpaper {
-    /// Assings random wallpaper to all monitors
+    /// Assigns random wallpaper to all monitors
     Random,
     /// Selects a wallpaper for each monitor
     Select,
@@ -85,7 +90,7 @@ pub enum Browser {
     Browse,
 }
 
-/// Set of subcommands for newtork actions
+/// Set of subcommands for network actions
 #[derive(Subcommand, Debug)]
 pub enum Network {
     /// Select a WiFi device
@@ -100,18 +105,29 @@ pub enum Network {
     },
 }
 
+/// Set of wifi actions for network subcommand
 #[derive(Subcommand, Debug)]
 pub enum WifiAction {
     /// Connect to a WiFi network
     Connect,
-    /// Connect to a WiFi network
+    /// Disconnect from a WiFi network
     Disconnect,
 }
 
+/// Set of bluetooth actions for network subcommand
 #[derive(Subcommand, Debug)]
 pub enum BluetoothAction {
-    /// Connect to a WiFi network
+    /// Connect to a bluetooth device
     Connect,
-    /// Connect to a WiFi network
+    /// Disconnect from a bluetooth device
     Disconnect,
+}
+
+/// Set of subcommands for tmux actions
+#[derive(Subcommand, Debug)]
+pub enum Tmux {
+    /// Attach to a session (creates it if missing)
+    Attach,
+    /// Kill a tmux session
+    Kill,
 }
