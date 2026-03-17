@@ -3,8 +3,8 @@ pub mod context;
 pub mod tools;
 pub mod utils;
 
-use crate::context::Context;
-use tools::{audio, browser, completions, network, osmode, tmux, wallpaper};
+use context::Context;
+use tools::{audio, browser, completions, config, network, osmode, tmux, wallpaper};
 use utils::cli::{Cli, Command};
 
 /// Entry point for the application
@@ -34,6 +34,7 @@ pub fn run(cli: Cli) -> anyhow::Result<()> {
         Command::Browser { action } => browser::handler(&ctx, action)?,
         Command::Network { action } => network::handler(&ctx, action)?,
         Command::Tmux { action } => tmux::handler(&ctx, action)?,
+        Command::Config { action } => config::handler(&ctx, action)?,
 
         // Sub-action commands with flags
         Command::Completions { action, silent } => completions::handler(action, silent)?,

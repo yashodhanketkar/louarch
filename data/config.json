@@ -1,9 +1,8 @@
 {
   "browser": "firefox",
   "searchEngine": "https://duckduckgo.com/?q=",
-  "bookmarksFile": "$HOME/private/shortcuts.txt",
   "wallpaperDir": "$HOME/Pictures/wallpapers/",
   "hyprpaperPath": "$HOME/.config/hypr/hyprpaper.conf",
   "dbPath": "$HOME/.cache/louarch/bookmarks.sqlite",
-  "tmuxDirs": [],
+  "tmuxDirs": []
 }

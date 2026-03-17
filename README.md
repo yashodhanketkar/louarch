@@ -7,9 +7,11 @@ Currently, this project is in development stage. Follwing features are planned:
 
 -	[X] Audio switcher
 -	[X] Browser launcher
+-	[X] Completions generator
+-	[X] Config handler
 -	[X] Network switcher
 -	[X] OS Mode switcher
--	[X] Tmux
+-	[X] Tmux handler
 -	[X] Wallpaper switcher
 
 Table of Contents
@@ -81,6 +83,22 @@ cmd: `completions [args]`
 | bash | generate bash comps |
 | zsh  | generate zsh comps  |
 
+### Config
+
+Config handler
+
+This command allows user to:
+
+1.	View currently laoded config
+2.	Edit config file
+
+cmd `config [args]`
+
+| Args | Description         |
+|------|---------------------|
+| view | view current config |
+| edit | edit config file    |
+
 ### Network
 
 Toggle connected devices/networks
@@ -146,7 +164,8 @@ Configuration
 -	Rustup/Cargo 1.90 or higher
 -	Rofi 2.0.0 or higher
 -	wallust 3.4.0 or higher
--	GNU Make 4.4.1 (Optional)
+-	UPX 5.1.1 or higher (Optional) (For compressing binary)
+-	GNU Make 4.4.1 (Optional) (For automated build process)
 
 ### Install
 

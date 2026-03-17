@@ -6,8 +6,8 @@ use crate::{
 
 /// Search for a term
 ///
-/// Searches for the term using the configured search engine and and opens the
-/// search result in the browser
+/// Searches for the term using the configured search engine and opens
+/// the search result in the browser
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration
@@ -25,8 +25,8 @@ pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
     let search_term = output.unwrap();
 
     let (success, _) = run(
-        &ctx.config.browser,
-        &[format!("{}{}", &ctx.config.search_engine, search_term)],
+        &ctx.app.browser,
+        &[format!("{}{}", &ctx.app.search_engine, search_term)],
     )?;
 
     if !success {

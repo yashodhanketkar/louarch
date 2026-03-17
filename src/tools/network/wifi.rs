@@ -9,7 +9,8 @@ use crate::utils::notify::{
 
 /// Handler for wifi sub-actions
 ///
-/// This function dispatches the correct sub-action based on input from user
+/// This function dispatches the correct sub-action based on input from
+/// user
 pub(crate) fn handler(action: WifiAction) -> anyhow::Result<()> {
     match action {
         WifiAction::Connect => connect(),
@@ -19,8 +20,8 @@ pub(crate) fn handler(action: WifiAction) -> anyhow::Result<()> {
 
 /// Disconnect from wifi network
 ///
-/// This function will disconnect from the currently connected wifi network.
-/// On disconnection, the user will be notified.
+/// This function will disconnect from the currently connected wifi
+/// network. On disconnection, the user will be notified.
 ///
 /// # Errors
 /// Returns an error if
@@ -84,8 +85,6 @@ fn apply(device: String) -> anyhow::Result<()> {
 /// * user cancels selection
 /// * no networks found
 fn select(devices: &[String]) -> anyhow::Result<String> {
-    // let device_refs: Vec<&str> = devices.iter().map(String::as_str).collect();
-    // match rofi_prompt("Select wifi device", &device_refs, true)? {
     match rofi_prompt("Select wifi device", devices, true)? {
         Some(s) => Ok(s),
         None => anyhow::bail!("Selection cancelled"),

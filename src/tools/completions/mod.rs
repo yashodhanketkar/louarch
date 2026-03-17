@@ -1,10 +1,7 @@
-//! Handles shell completions
+//! Shell completion generation.
 //!
-//! This module contains the shell completions generator. Currently, only
-//! bash and zsh completions are supported.
-//!
-//! User will need to install the completions manually.
-
+//! Generates and manages shell completion scripts for Bash and Zsh
+//! to improve the CLI user experience.
 use clap_complete::Shell;
 
 mod _internal;
@@ -13,8 +10,8 @@ mod zsh;
 
 /// Generate shell completions
 ///
-/// This function generates shell completions for the user. Currently, only
-/// bash and zsh completions are supported.
+/// This function generates shell completions for the user. Currently,
+/// only bash and zsh completions are supported.
 ///
 /// # Arguments
 /// * `action` - Shell to generate completions for

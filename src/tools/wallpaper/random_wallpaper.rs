@@ -33,7 +33,7 @@ pub(crate) fn switch(ctx: &Context) -> anyhow::Result<()> {
 /// # Errors
 /// Returns an error if the wallpapers directory cannot be found
 pub fn randomizer(ctx: &Context) -> anyhow::Result<Vec<String>> {
-    let images = pathbuf_to_string(list_images(&ctx.config.wallpaper_dir)?);
+    let images = pathbuf_to_string(list_images(&ctx.app.wallpaper_dir)?);
 
     let img = images
         .choose(&mut rand::thread_rng())

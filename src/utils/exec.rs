@@ -1,7 +1,7 @@
-//! Handles the process execution
+//! System shell and external application calls
 //!
-//! This module contains calls to system shells and external applications such
-//! as rofi.
+//! This module contains calls to system shells and external
+//! applications such as rofi.
 use std::env;
 use std::ffi::OsStr;
 use std::io::Write;
@@ -62,8 +62,8 @@ where
 
 /// Prompt factory for rofi
 ///
-/// Takes a prompt and a list of options and displays the prompt to the user.
-/// Custom options can be disabled by setting `no_custom` to true.
+/// Takes a prompt and a list of options and displays the prompt to the
+/// user. Custom options can be disabled by setting `no_custom` to true.
 ///
 /// # Arguments
 /// * `prompt` - Prompt to display to the user
@@ -85,7 +85,6 @@ where
     S: AsRef<str>,
 {
     let config_path = shellexpand::full("~/.config/rofi/prompt.rasi")?.to_string();
-    // let mut args: Vec<&str> = vec!["-dmenu", "-config", &config_path, "-p", prompt];
     let mut cmd = Command::new("rofi");
     cmd.args(["-dmenu", "-config"]);
     cmd.arg(&config_path);

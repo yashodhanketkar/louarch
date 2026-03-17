@@ -1,14 +1,14 @@
-//! Handles the CLI
+//! CLI structure and command methods
 //!
-//! This module contains the CLI structure and the
-//! command methods available to the user.
+//! This module contains the CLI structure and the command methods
+//! available to the user.
 use clap::{Parser, Subcommand};
 use clap_complete::Shell;
 
 /// Handles the CLI
 ///
-/// This struct contains the CLI struct which is the central
-/// action methods available to the user.
+/// This struct contains the CLI struct which is the central action
+/// methods available to the user.
 #[derive(Parser, Debug)]
 #[command(name = "louarch")]
 #[command(about = "Single-binary system utility")]
@@ -51,6 +51,10 @@ pub enum Command {
 
         #[arg(short, long)]
         silent: bool,
+    },
+    Config {
+        #[command(subcommand)]
+        action: Config,
     },
 }
 
@@ -130,4 +134,13 @@ pub enum Tmux {
     Attach,
     /// Kill a tmux session
     Kill,
+}
+
+/// Set of subcommands for config actions
+#[derive(Subcommand, Debug)]
+pub enum Config {
+    /// View the config
+    View,
+    /// Edit the config file
+    Edit,
 }

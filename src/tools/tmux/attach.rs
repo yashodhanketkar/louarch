@@ -15,7 +15,8 @@ struct Session {
 
 /// Handles the tmux attach action
 ///
-/// This function will prompt the user to select a tmux session and attach to it.
+/// This function will prompt the user to select a tmux session and
+/// attach to it.
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration
@@ -36,8 +37,8 @@ pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
 
 /// List available directories for tmux sessions
 ///
-/// This function will list all first level directories configured in the
-/// tmux_dirs field of the context.
+/// This function will list all first level directories configured in
+/// the tmux_dirs field of the context.
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration
@@ -47,7 +48,7 @@ pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
 /// * no directories found
 fn list(ctx: &Context) -> anyhow::Result<Vec<String>> {
     let mut available_dirs: Vec<String> = Vec::new();
-    for dir in &ctx.config.tmux_dirs {
+    for dir in &ctx.app.tmux_dirs {
         for entry in fs::read_dir(dir)? {
             let entry = entry?;
             let path = entry.path();
@@ -67,8 +68,8 @@ fn list(ctx: &Context) -> anyhow::Result<Vec<String>> {
 
 /// Select a base directory
 ///
-/// This function will select a base directory from the list of available
-/// to spawn/attach to a tmux session.
+/// This function will select a base directory from the list of
+/// available to spawn/attach to a tmux session.
 fn selector(options: Vec<String>) -> anyhow::Result<String> {
     let selected = rofi_prompt("Select", options.iter().map(|s| s.as_str()), true)?;
     match selected {
@@ -79,8 +80,8 @@ fn selector(options: Vec<String>) -> anyhow::Result<String> {
 
 /// Formats the selected base directory
 ///
-/// This function will format the selected base directory to a session object.
-/// This object will be used to spawn/attach to a tmux session.
+/// This function will format the selected base directory to a session
+/// object. This object will be used to spawn/attach to a tmux session.
 ///
 /// # Arguments
 /// * `selected` - Selected base directory
@@ -98,8 +99,8 @@ fn formatter(selected: String) -> anyhow::Result<Session> {
 
 /// Start a tmux session
 ///
-/// This function will start a tmux session if it doesn't exist or attach to it
-/// if it does.
+/// This function will start a tmux session if it doesn't exist or
+/// attach to it if it does.
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration

@@ -1,4 +1,4 @@
-//! Handles various notifications
+//! System notifications caller
 use crate::utils::exec::run;
 
 /// Handles notifications types
@@ -11,8 +11,8 @@ pub enum NotifyType {
     Ok,
 }
 
-/// Returns the types as a numerical value with respect to hyprctl notify
-/// documentation
+/// Returns the types as a numerical value with respect to hyprctl
+/// notify documentation
 impl NotifyType {
     fn as_str(&self) -> &'static str {
         match self {

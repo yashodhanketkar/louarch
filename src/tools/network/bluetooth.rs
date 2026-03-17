@@ -31,7 +31,8 @@ impl BluetoothDevice {
 
 /// Handler for bluetooth sub-actions
 ///
-/// This function dispatches the correct sub-action based on input from user
+/// This function dispatches the correct sub-action based on input from
+/// user
 pub(crate) fn handler(action: BluetoothAction) -> anyhow::Result<()> {
     match action {
         BluetoothAction::Connect => connect(),
@@ -41,8 +42,8 @@ pub(crate) fn handler(action: BluetoothAction) -> anyhow::Result<()> {
 
 /// Disconnect from bluetooth device
 ///
-/// This function will disconnect from the currently connected bluetooth device.
-/// On disconnection, the user will be notified.
+/// This function will disconnect from the currently connected bluetooth
+/// device. On disconnection, the user will be notified.
 ///
 /// # Errors
 /// Returns an error if
@@ -59,7 +60,8 @@ fn disconnect() -> anyhow::Result<()> {
 
 /// Connect to bluetooth device
 ///
-/// This function will connect to the currently selected bluetooth device.
+/// This function will connect to the currently selected bluetooth
+/// device.
 ///
 /// # Errors
 /// Returns an error if
@@ -95,8 +97,8 @@ fn apply(device: &BluetoothDevice) -> anyhow::Result<()> {
 
 /// Select a bluetooth device
 ///
-/// This function will select a bluetooth device from the list of available
-/// devices.
+/// This function will select a bluetooth device from the list of
+/// available devices.
 ///
 /// # Arguments
 /// * `devices` - List of available bluetooth devices

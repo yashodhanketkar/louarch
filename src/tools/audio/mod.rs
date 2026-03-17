@@ -1,4 +1,7 @@
-//! This module contains logic for switching audio devices.
+//! Audio device management.
+//!
+//! Provides interfaces for switching between audio sinks (outputs)
+//! and sources (inputs) via interactive dialogs.
 use crate::{context::Context, utils::cli::Audio};
 
 mod _internal;

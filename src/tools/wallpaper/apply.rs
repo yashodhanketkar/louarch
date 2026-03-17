@@ -10,12 +10,13 @@ use std::fmt::Write;
 
 /// Apply wallpapers to the monitors
 ///
-/// This function will apply the wallpapers to the monitors. The wallpapers
-/// are selected based on the user's input.
+/// This function will apply the wallpapers to the monitors. The
+/// wallpapers are selected based on the user's input.
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration
-/// * `selected` - Vector of strings containing the names of the wallpapers
+/// * `selected` - Vector of strings containing the names of the
+///   wallpapers
 ///
 /// # Errors
 /// Returns an error if
@@ -52,7 +53,7 @@ fn write_hyprpaper_config(ctx: &Context, imgs: &[String]) -> anyhow::Result<()> 
 
     writer(&mut content, "", &imgs[0])?;
 
-    let config_path = &ctx.config.hyprpaper_path;
+    let config_path = &ctx.app.hyprpaper_path;
     std::fs::write(config_path, content)?;
 
     Ok(())
@@ -82,8 +83,8 @@ fn writer(content: &mut String, monitor: &str, wallpaper: &str) -> anyhow::Resul
 
 /// Generate the color pallete
 ///
-/// This function will generate the color pallete for the wallpaper using
-/// wallust.
+/// This function will generate the color pallete for the wallpaper
+/// using wallust.
 ///
 /// # Arguments
 /// * `main_wallpaper` - Path to the main/default wallpaper

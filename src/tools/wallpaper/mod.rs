@@ -1,6 +1,7 @@
-//! This module contains logic for switching wallpapers.
+//! Desktop wallpaper management.
 //!
-//! Currently, supports random wallpaper and selecting wallpapers.
+//! Provides functionality for applying random wallpapers or
+//! selecting specific ones through interactive menus.
 use crate::context::Context;
 use crate::utils::cli::Wallpaper;
 

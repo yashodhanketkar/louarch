@@ -1,7 +1,5 @@
-# Define the project name (used for the final executable name in some cases)
 NAME := louarch
 
-# Phony targets don't represent actual files, they are just names for commands
 .PHONY: all build run test clean
 default: help
 

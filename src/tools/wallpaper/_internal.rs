@@ -45,7 +45,7 @@ pub(crate) fn format_image(ctx: &Context, imgs: &Vec<String>) -> anyhow::Result<
     for img in imgs {
         paths.push(format!(
             "{}{}",
-            &ctx.config.wallpaper_dir.to_string_lossy(),
+            &ctx.app.wallpaper_dir.to_string_lossy(),
             img
         ));
     }
@@ -58,8 +58,8 @@ pub(crate) fn format_image(ctx: &Context, imgs: &Vec<String>) -> anyhow::Result<
 /// # Arguments
 /// * `paths` - Vector of paths to the wallpapers
 ///
-/// This function will return a vector of strings containing the names of the
-/// wallpapers in the wallpapers directory.
+/// This function will return a vector of strings containing the names
+/// of the wallpapers in the wallpapers directory.
 pub(crate) fn pathbuf_to_string(paths: Vec<PathBuf>) -> Vec<String> {
     paths
         .into_iter()

@@ -9,18 +9,14 @@ use crate::utils::exec::run;
 /// # Arguments
 /// * `ctx` - Context containing the configuration
 ///
-/// This function will toggle game mode on and off based on current state.
-/// This state is retrieved from the application context.
+/// This function will toggle game mode on and off based on current
+/// state. This state is retrieved from the application context.
 ///
 /// This function uses sleep to prevent race condition.
 ///
 /// # Requirements
 /// * hyprsunset must be installed
 /// * must be inside a hyprland session
-///
-/// # Actions
-/// * hyprsunset is running, it will be killed -> turning night mode off
-/// * hyprsunset is not running, it will be started -> turning night mode on
 ///
 /// # Errors
 /// Returns an error if

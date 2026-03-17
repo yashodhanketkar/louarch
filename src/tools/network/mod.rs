@@ -1,6 +1,7 @@
-//! This module contains logic for selecting network devices.
+//! Network device management.
 //!
-//! Currently, supports random wifi and bluetooth operations.
+//! Provides controls for interacting with and switching between
+//! WiFi and Bluetooth devices.
 use crate::context::Context;
 use crate::utils::cli::Network;
 

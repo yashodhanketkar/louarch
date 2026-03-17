@@ -3,8 +3,8 @@ use crate::{context::Context, tools::audio::_internal::select_device};
 
 /// Select the audio source
 ///
-/// This function will prompt the user to select an audio source and set it as
-/// the default source.
+/// This function will prompt the user to select an audio source and set
+/// it as the default source.
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration

@@ -20,7 +20,7 @@ use crate::tools::browser::_internal::open_db;
 /// * user cancels
 /// * browser fails
 pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
-    let conn = open_db(&ctx.config.db_path)?;
+    let conn = open_db(&ctx.app.db_path)?;
     let bookmarks = &get_bookmarks(&conn, true)?;
     let output = rofi_prompt("Open: ", bookmarks, false)?
         .ok_or_else(|| anyhow::anyhow!("Url not found. Cancelling."))?;
@@ -29,7 +29,7 @@ pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
         "Add" => add_bookmark(&conn),
         "Remove" => remove_bookmark(&conn),
         opts => {
-            let (success, _) = run(&ctx.config.browser, [opts])?;
+            let (success, _) = run(&ctx.app.browser, [opts])?;
             anyhow::ensure!(success, "Failed to open browser");
             Ok(())
         }
@@ -65,8 +65,6 @@ fn add_bookmark(conn: &Connection) -> anyhow::Result<()> {
 /// * failed to delete bookmark
 fn remove_bookmark(conn: &Connection) -> anyhow::Result<()> {
     let bookmarks = &get_bookmarks(conn, false)?;
-    // let bookmarks_ref = &bookmarks.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
-    // let bookmark = rofi_prompt("Select to remove", bookmarks_ref, true)?
     let bookmark = rofi_prompt("Select to remove", bookmarks, true)?
         .ok_or_else(|| anyhow::anyhow!("No such bookmark found!. Cancelling."))?;
     conn.execute("delete from bookmarks where url = (?1)", [bookmark])?;

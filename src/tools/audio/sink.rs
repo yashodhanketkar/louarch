@@ -3,8 +3,8 @@ use crate::{context::Context, tools::audio::_internal::select_device};
 
 /// Select the audio sink
 ///
-/// This function will prompt the user to select an audio sink and set it as
-/// the default sink.
+/// This function will prompt the user to select an audio sink and set
+/// it as the default sink.
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration

@@ -1,6 +1,7 @@
-//! This module contains logic for turning on/off the OS modes.
+//! OS mode management.
 //!
-//! Currently, supports toggling the game mode and night mode.
+//! Provides toggles for system-level configurations such as
+//! game mode and night light settings.
 mod game;
 mod night;
 

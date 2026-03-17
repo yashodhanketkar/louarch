@@ -6,7 +6,8 @@ use crate::{
 
 /// Handles the tmux kill action
 ///
-/// This function will prompt the user to select a tmux session and kill it.
+/// This function will prompt the user to select a tmux session and kill
+/// it.
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration

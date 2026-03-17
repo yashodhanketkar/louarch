@@ -8,7 +8,7 @@ use crate::utils::exec::rofi_prompt;
 
 /// Apply a selcted wallpaper
 ///
-/// This function will apply selected wallpaper/s to respective monitors.
+/// This function will apply selected wallpapers to respective monitors.
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration
@@ -41,7 +41,7 @@ pub(crate) fn switch(ctx: &Context) -> anyhow::Result<()> {
 /// * the wallpapers are not found
 /// * rofi prompt fails
 fn display(ctx: &Context) -> anyhow::Result<Vec<String>> {
-    let wps = pathbuf_to_string(list_images(&ctx.config.wallpaper_dir)?);
+    let wps = pathbuf_to_string(list_images(&ctx.app.wallpaper_dir)?);
     let opts = wps.iter().map(|s| s.as_str()).collect();
     let selected = choose_wallpaper(ctx, opts)?;
     Ok(selected)

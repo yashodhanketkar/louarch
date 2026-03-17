@@ -9,18 +9,14 @@ use crate::utils::notify::{
 
 /// Toggle the game mode
 ///
-/// This function will toggle game mode on and off based on current state.
-/// This state is retrieved from the application context.
+/// This function will toggle game mode on and off based on current
+/// state. This state is retrieved from the application context.
 ///
 /// # Arguments
 /// * `ctx` - Context containing the configuration
 ///
 /// # Requirement
 /// * must be inside a hyprland session
-///
-/// # Actions
-/// * If game mode is off, animations will be enabled -> turning game mode on
-/// * If game mode is on, animations will be disabled -> turning game mode off
 ///
 /// # Errors
 /// Returns an error if hyprctl results in an error
@@ -36,8 +32,8 @@ pub(crate) fn toggle(ctx: &Context) -> anyhow::Result<()> {
 /// Turn on game mode
 ///
 /// Helper function to turn on game mode
-/// This function will run hyprctl commands to turn disabled animations and
-/// decorations to improve performance.
+/// This function will run hyprctl commands to turn disabled animations
+/// and decorations to improve performance.
 ///
 /// Sends a notification to the user.
 ///

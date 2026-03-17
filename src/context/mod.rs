@@ -1,9 +1,9 @@
-//! This module contains the `Context` struct which is the central
-//! information store for the app.
-mod config;
-mod system;
-
-use crate::context::{config::AppConfig, system::SystemConfig};
+//! Context for the app
+//!
+//! Gather all ssystem information and application configuration
+//! and provide a unified interface to the rest of the app.
+pub mod app;
+pub mod system;
 
 /// Central information store for the app
 ///
@@ -12,9 +12,9 @@ use crate::context::{config::AppConfig, system::SystemConfig};
 /// for the app.
 pub struct Context {
     /// System configuration
-    pub system: SystemConfig,
+    pub system: system::Config,
     /// Application configuration
-    pub config: AppConfig,
+    pub app: app::Config,
 }
 
 impl Context {
@@ -28,9 +28,9 @@ impl Context {
     /// * the system configuration cannot be loaded
     /// * the application configuration cannot be loaded
     pub fn new() -> anyhow::Result<Self> {
-        let system = SystemConfig::load()?;
-        let config = AppConfig::load()?;
+        let system = system::Config::load()?;
+        let app = app::Config::load()?;
 
-        Ok(Self { system, config })
+        Ok(Self { system, app })
     }
 }

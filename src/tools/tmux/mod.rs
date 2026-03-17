@@ -1,8 +1,7 @@
-//! This module contains logic for tmux actions.
+//! Tmux session management.
 //!
-//! Currently, supports attaching to a tmux session and killing a session.
-//! actions.
-
+//! Provides functionality to attach to or terminate tmux sessions
+//! based on the application context.
 mod attach;
 mod kill;
 

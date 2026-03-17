@@ -6,8 +6,8 @@ use crate::utils::{
 
 /// Select an audio device
 ///
-/// This function will prompt the user to select an audio device and set it as
-/// the default device.
+/// This function will prompt the user to select an audio device and set
+/// it as the default device.
 ///
 /// # Arguments
 /// * `ctx_value` - Value of the current default device
@@ -68,8 +68,8 @@ pub(crate) fn select_device(
     Ok(())
 }
 
-/// Lists the available audio devices (sinks or sources) depending on the
-/// user provided context
+/// Lists the available audio devices (sinks or sources) depending on
+/// the user provided context
 ///
 /// # Arguments
 /// * `list_arg` - Argument to pass to pactl to list correct devices
