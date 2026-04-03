@@ -32,9 +32,13 @@ pub enum Command {
         #[command(subcommand)]
         action: Audio,
     },
-    Network {
+    Wifi {
         #[command(subcommand)]
-        action: Network,
+        action: Wifi,
+    },
+    Bluetooth {
+        #[command(subcommand)]
+        action: Bluetooth,
     },
     Browser {
         #[command(subcommand)]
@@ -94,24 +98,9 @@ pub enum Browser {
     Browse,
 }
 
-/// Set of subcommands for network actions
-#[derive(Subcommand, Debug)]
-pub enum Network {
-    /// Select a WiFi device
-    Wifi {
-        #[command(subcommand)]
-        action: WifiAction,
-    },
-    /// Select a bluetooth device
-    Bluetooth {
-        #[command(subcommand)]
-        action: BluetoothAction,
-    },
-}
-
 /// Set of wifi actions for network subcommand
 #[derive(Subcommand, Debug)]
-pub enum WifiAction {
+pub enum Wifi {
     /// Connect to a WiFi network
     Connect,
     /// Disconnect from a WiFi network
@@ -120,7 +109,7 @@ pub enum WifiAction {
 
 /// Set of bluetooth actions for network subcommand
 #[derive(Subcommand, Debug)]
-pub enum BluetoothAction {
+pub enum Bluetooth {
     /// Connect to a bluetooth device
     Connect,
     /// Disconnect from a bluetooth device

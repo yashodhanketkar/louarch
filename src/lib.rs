@@ -32,7 +32,8 @@ pub fn run(cli: Cli) -> anyhow::Result<()> {
         Command::Osmode { action } => osmode::handler(&ctx, action)?,
         Command::Audio { action } => audio::handler(&ctx, action)?,
         Command::Browser { action } => browser::handler(&ctx, action)?,
-        Command::Network { action } => network::handler(&ctx, action)?,
+        Command::Wifi { action } => network::wifi_handler(&ctx, action)?,
+        Command::Bluetooth { action } => network::bluetooth_handler(&ctx, action)?,
         Command::Tmux { action } => tmux::handler(&ctx, action)?,
         Command::Config { action } => config::handler(&ctx, action)?,
 

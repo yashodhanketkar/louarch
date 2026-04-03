@@ -1,5 +1,4 @@
 //! Handle bluetooth actions
-use crate::utils::cli::BluetoothAction;
 use crate::utils::exec::{self, rofi_prompt};
 use crate::utils::notify::{
     NotifyColor::{Green, Red},
@@ -29,17 +28,6 @@ impl BluetoothDevice {
     }
 }
 
-/// Handler for bluetooth sub-actions
-///
-/// This function dispatches the correct sub-action based on input from
-/// user
-pub(crate) fn handler(action: BluetoothAction) -> anyhow::Result<()> {
-    match action {
-        BluetoothAction::Connect => connect(),
-        BluetoothAction::Disconnect => disconnect(),
-    }
-}
-
 /// Disconnect from bluetooth device
 ///
 /// This function will disconnect from the currently connected bluetooth
@@ -49,7 +37,7 @@ pub(crate) fn handler(action: BluetoothAction) -> anyhow::Result<()> {
 /// Returns an error if
 /// * bluetoothctl fails
 /// * user cancels disconnection
-fn disconnect() -> anyhow::Result<()> {
+pub(crate) fn disconnect() -> anyhow::Result<()> {
     let (success, _) = exec::run("bluetoothctl", ["disconnect"])?;
     match success {
         true => send(Warn, Red, "Disconnected bluetooth device")?,
@@ -67,7 +55,7 @@ fn disconnect() -> anyhow::Result<()> {
 /// Returns an error if
 /// * bluetoothctl fails
 /// * user cancels connection
-fn connect() -> anyhow::Result<()> {
+pub(crate) fn connect() -> anyhow::Result<()> {
     let devices = list()?;
     let selected = select(&devices)?;
     apply(selected)?;

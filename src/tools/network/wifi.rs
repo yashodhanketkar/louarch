@@ -1,22 +1,10 @@
 //! Handle wifi actions
-use crate::utils::cli::WifiAction;
 use crate::utils::exec::{self, rofi_prompt};
 use crate::utils::notify::{
     NotifyColor::{Green, Red, Yellow},
     NotifyType::{Hint, Info, Warn},
     send,
 };
-
-/// Handler for wifi sub-actions
-///
-/// This function dispatches the correct sub-action based on input from
-/// user
-pub(crate) fn handler(action: WifiAction) -> anyhow::Result<()> {
-    match action {
-        WifiAction::Connect => connect(),
-        WifiAction::Disconnect => disconnect(),
-    }
-}
 
 /// Disconnect from wifi network
 ///
@@ -27,7 +15,7 @@ pub(crate) fn handler(action: WifiAction) -> anyhow::Result<()> {
 /// Returns an error if
 /// * nmcli fails
 /// * user cancels disconnection
-fn disconnect() -> anyhow::Result<()> {
+pub(crate) fn disconnect() -> anyhow::Result<()> {
     let (success, _) = exec::run("nmcli", ["device", "disconnect", "wlan0"])?;
     match success {
         true => send(Warn, Red, "Disconnected from WiFi network")?,
@@ -44,7 +32,7 @@ fn disconnect() -> anyhow::Result<()> {
 /// Returns an error if
 /// * nmcli fails
 /// * user cancels connection
-fn connect() -> anyhow::Result<()> {
+pub(crate) fn connect() -> anyhow::Result<()> {
     let devices = list()?;
     let selected = select(&devices)?;
     apply(selected)?;
