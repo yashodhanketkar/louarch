@@ -31,7 +31,7 @@ pub(crate) fn handle(ctx: &Context) -> anyhow::Result<()> {
 
     if !success {
         anyhow::bail!("Failed to open browser");
-    };
+    }
 
     Ok(())
 }

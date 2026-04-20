@@ -37,7 +37,7 @@ pub fn randomizer(ctx: &Context) -> anyhow::Result<Vec<String>> {
 
     let img = images
         .choose(&mut rand::thread_rng())
-        .map(|p| p.to_string())
+        .cloned()
         .ok_or_else(|| anyhow::anyhow!("No wallpapers found"))?;
 
     Ok(vec![img])

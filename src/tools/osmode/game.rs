@@ -24,7 +24,7 @@ pub(crate) fn toggle(ctx: &Context) -> anyhow::Result<()> {
     match ctx.system.game_mode_status {
         true => off()?,
         false => on()?,
-    };
+    }
 
     Ok(())
 }

@@ -32,7 +32,7 @@ pub fn handler(action: Shell, silent: bool) -> anyhow::Result<()> {
         Shell::Bash => bash::handle(path, silent)?,
         Shell::Zsh => zsh::handle(path, silent)?,
         _ => anyhow::bail!("Unsupported shell"),
-    };
+    }
 
     Ok(())
 }

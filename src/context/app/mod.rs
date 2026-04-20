@@ -13,8 +13,11 @@ use serde::Deserialize;
 mod defaults;
 mod deserializers;
 
-use defaults::*;
-use deserializers::*;
+use defaults::{
+    default_browser, default_db_path, default_editor, default_hyprpaper_path,
+    default_search_engine, default_tmux_dirs, default_wallpaper_dir,
+};
+use deserializers::{deserialize_path, deserialize_vec_path};
 
 /// Store for the application configuration
 ///
