@@ -118,6 +118,27 @@ where
     }
 }
 
+/// Run a tmux command
+///
+/// This function will run a tmux command with respect to tmux status.
+/// If the environment variable TMUX is set, the command will remove it
+/// from the running environment to prevent conflicts.
+///
+/// # Arguments
+/// * `args` - Arguments to pass to the command
+pub fn tmux_cmd<I, S>(args: I) -> std::process::Command
+where
+    I: IntoIterator<Item = S>,
+    S: AsRef<OsStr>,
+{
+    let mut cmd = std::process::Command::new("tmux");
+    cmd.args(args);
+    if env::var("TMUX").is_ok() {
+        cmd.env("TMUX", "");
+    }
+    cmd
+}
+
 /// Checks if an application is installed
 ///
 /// # Arguments

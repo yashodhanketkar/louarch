@@ -203,6 +203,4 @@ cargo clean
 LICENSE
 -------
 
-[MIT](./LICENSE)
-
-Copyright (c) 2026 Yashodhan Ketkar
+This project is licensed under the [GNU GPLv3.0 License](./LICENSE) - see the [license](./LICENSE) file for details.

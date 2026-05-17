@@ -3,7 +3,7 @@ use std::fs;
 
 use crate::{
     context::Context,
-    utils::exec::{cmd_run, rofi_prompt},
+    utils::exec::{rofi_prompt, tmux_cmd},
 };
 
 /// Represents a tmux session
@@ -110,13 +110,65 @@ fn formatter(selected: String) -> anyhow::Result<Session> {
 /// Returns an error if
 /// * tmux fails
 fn start(ctx: &Context, session: &Session) -> anyhow::Result<()> {
-    if ctx.system.tmux_sessions.contains(&session.name) {
-        cmd_run("tmux", ["attach", "-t", &session.name])?;
+    ensure_session(ctx, session)?;
+    attach_session(session)?;
+    Ok(())
+}
+
+/// Ensure a tmux session exists
+///
+/// This function will ensure a tmux session exists. If the session does
+/// not exist, it will be created.
+///
+/// # Arguments
+/// * `ctx` - Context containing the configuration
+/// * `session` - Session to start/attach to
+///
+/// # Errors
+/// Returns an error if
+/// * tmux fails
+fn ensure_session(ctx: &Context, session: &Session) -> anyhow::Result<()> {
+    if !ctx.system.tmux_sessions.contains(&session.name) {
+        let status = tmux_cmd([
+            "new-session",
+            "-d",
+            "-s",
+            &session.name,
+            "-c",
+            &session.path,
+        ])
+        .status()?;
+
+        if !status.success() {
+            anyhow::bail!("failed to create a tmux session: {}", session.name)
+        }
+    }
+
+    Ok(())
+}
+
+/// Attach to a tmux session
+///
+/// This function will attach to a tmux session.
+///
+/// If within a tmux session, client will be switched otherwise it will
+/// attach to the required session (from shell environment).
+///
+/// # Arguments
+/// * `session` - Session to start/attach to
+///
+/// # Errors
+/// Returns an error if
+/// * tmux fails
+fn attach_session(session: &Session) -> anyhow::Result<()> {
+    let args = if std::env::var("TMUX").is_ok() {
+        vec!["switch-client", "-t", &session.name]
     } else {
-        cmd_run(
-            "tmux",
-            ["new-session", "-s", &session.name, "-c", &session.path],
-        )?;
+        vec!["attach", "-t", &session.name]
+    };
+
+    if !tmux_cmd(args).status()?.success() {
+        anyhow::bail!("failed to attach to tmux session: {}", session.name)
     }
 
     Ok(())
