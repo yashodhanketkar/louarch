@@ -2,6 +2,7 @@
 
 # Required versions
 REQUIRED_CARGO="1.90.0"
+REQUIRED_HYPRLAND="0.55.1"
 REQUIRED_ROFI="2.0.0"
 REQUIRED_WALLUST="3.4.0"
 REQUIRED_UPX="5.1.1"
@@ -39,6 +40,16 @@ if command -v cargo >/dev/null 2>&1; then
 else
     echo "❌ Cargo not found. Terminating..."
     cargo_version="0"
+fi
+
+# Check for hyprland
+if command -v hyprland >/dev/null 2>&1; then
+    sleep 0.1
+    hyprland_version=$(hyprland --version | grep Hyprland | awk '{ print $2 }')
+    check_version "Hyprland" "$REQUIRED_HYPRLAND" "$hyprland_version" || fail=1
+else
+    echo "❌ Hyprland not found. Terminating..."
+    hyprland_version="0"
 fi
 
 # Check for wofi
