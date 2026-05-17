@@ -65,7 +65,7 @@ pub(crate) fn check_game_mode() -> anyhow::Result<bool> {
         .args(["getoption", "animations:enabled"])
         .output()?;
     let status = String::from_utf8(output.stdout)?.trim().to_string();
-    Ok(!status.contains("int: 1"))
+    Ok(!status.contains("bool: true"))
 }
 
 /// Check if the Night mode is enabled

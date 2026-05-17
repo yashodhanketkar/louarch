@@ -129,20 +129,23 @@ fn apply_theme() -> anyhow::Result<()> {
     // handles wallpaper application
     if is_installed("hyprpaper") {
         let _ = exec::run("pkill", ["hyprpaper"]);
-        check(exec::run("hyprctl", ["dispatch", "exec", "hyprpaper"])?)?;
+        check(exec::run(
+            "hyprctl",
+            ["eval", r#"hl.exec_cmd("hyprpaper")"#],
+        )?)?;
     }
 
     // handles waybar colorscheme
     if is_installed("waybar") {
         let _ = exec::run("pkill", ["waybar"]);
-        check(exec::run("hyprctl", ["dispatch", "exec", "waybar"])?)?;
+        check(exec::run("hyprctl", ["eval", r#"hl.exec_cmd("waybar")"#])?)?;
     }
 
     // handles swaync colorscheme
     if is_installed("swaync") {
         let (swaync_running, _) = exec::run("pidof", ["swaync"])?;
         if !swaync_running {
-            check(exec::run("hyprctl", ["dispatch", "exec", "swaync"])?)?;
+            check(exec::run("hyprctl", ["eval", r#"hl.exec_cmd("swaync")"#])?)?;
         }
         check(exec::run("swaync-client", ["-rs"])?)?;
     }

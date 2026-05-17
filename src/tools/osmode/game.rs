@@ -40,17 +40,21 @@ pub(crate) fn toggle(ctx: &Context) -> anyhow::Result<()> {
 /// # Errors
 /// Returns an error if hyprctl results in an error
 fn on() -> anyhow::Result<()> {
-    let commands = "
-    keyword animations:enabled 0;
-    keyword animation borderangle,0;
-    keyword decoration:shadow:enabled 0;
-    keyword decoration:blur:enabled 0;
-    keyword decoration:fullscreen_opacity 1;
-    keyword decoration:rounding 0;
-    keyword general:gaps_in 0;
-    keyword general:gaps_out 0;
-    keyword general:border_size 0;";
-    run("hyprctl", ["--quiet", "--batch", commands])?;
+    let commands = r#"
+        hl.config({
+            animations = { enabled = false, },
+            animation = { "borderangle, 0", },
+            decoration = {
+                shadow = { enabled = false },
+                blur = { enabled = false },
+                fullscreen_opacity = 1.0,
+                rounding = 0,
+            },
+            general = { gaps_in = 0, gaps_out = 0, border_size = 0, }
+        })
+    "#;
+
+    run("hyprctl", ["--quiet", "eval", commands])?;
     send(Hint, Green, "Turned on game mode")?;
     Ok(())
 }

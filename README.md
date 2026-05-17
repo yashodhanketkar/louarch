@@ -162,6 +162,7 @@ Configuration
 ### Requirements
 
 -	Rustup/Cargo 1.90 or higher
+-	Hyprland 0.55.0 or higher
 -	Rofi 2.0.0 or higher
 -	wallust 3.4.0 or higher
 -	UPX 5.1.1 or higher (Optional) (For compressing binary)

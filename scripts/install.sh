@@ -25,16 +25,19 @@ BINPATH=/usr/bin/louarch
 # : abort installation
 if [[ -d $BASEPATHINSTALL ]]; then
     echo "Previous installation detected."
-    read -p "Do you want remove previous installation and proceed? (y/n) " yn
-    if [[ $yn == "y" ]]; then
+    read -p "Do you want remove previous installation and proceed? (y/N) " yn
+    case "$yn" in
+    y | Y)
         echo "Removing previous installation..."
         rm -rf $BASEPATHINSTALL
         sudo rm /usr/bin/louarch
-    else
+        ;;
+    *)
         # abort installation
         echo "Installation aborted."
         exit 0
-    fi
+        ;;
+    esac
 fi
 
 # create config directory
