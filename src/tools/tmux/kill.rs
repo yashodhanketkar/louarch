@@ -1,7 +1,8 @@
 //! Handles tmux kill action.
+
 use crate::{
     context::Context,
-    utils::exec::{cmd_run, rofi_prompt},
+    utils::exec::{rofi_prompt, tmux_cmd},
 };
 
 /// Handles the tmux kill action
@@ -56,6 +57,8 @@ fn selector(ctx: &Context) -> anyhow::Result<String> {
 /// Returns an error if
 /// * tmux fails
 fn killer(name: &str) -> anyhow::Result<()> {
-    cmd_run("tmux", ["kill-session", "-t", name])?;
+    if !tmux_cmd(["kill-session", "-t", name]).status()?.success() {
+        anyhow::bail!("tmux exited with error")
+    }
     Ok(())
 }
