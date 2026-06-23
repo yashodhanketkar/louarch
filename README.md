@@ -21,6 +21,7 @@ Table of Contents
 	-	[Audio](#audio)
 	-	[Browser](#browser)
 	-	[Completions](#completions)
+	-	[Config](#config)
 	-	[Network](#network)
 	-	[OS Mode](#os-mode)
 	-	[Tmux](#tmux)
@@ -94,10 +95,11 @@ This command allows user to:
 
 cmd `config [args]`
 
-| Args | Description         |
-|------|---------------------|
-| view | view current config |
-| edit | edit config file    |
+| Args     | Description            |
+|----------|------------------------|
+| view     | view current config    |
+| edit     | edit config file       |
+| keybinds | view hyprland keybinds |
 
 ### Network
 

@@ -132,4 +132,6 @@ pub enum Config {
     View,
     /// Edit the config file
     Edit,
+    /// View the keybinds
+    Keybinds,
 }
