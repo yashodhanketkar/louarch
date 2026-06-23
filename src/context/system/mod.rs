@@ -2,6 +2,9 @@
 //!
 //! This module gather system information and provides a unified
 //! interface for the context struct.
+
+use crate::context::system::hypr::HyprKeybinds;
+pub mod hypr;
 mod probes;
 
 /// Store for the system
@@ -22,6 +25,8 @@ pub struct Config {
     pub audio_source: String,
     /// Current active tmux sessions
     pub tmux_sessions: Vec<String>,
+    /// Current active hyprland keybindings
+    pub hypr_keybinds: Vec<HyprKeybinds>,
 }
 
 impl Config {
@@ -44,6 +49,7 @@ impl Config {
             audio_sink: audio_devices.sink,
             audio_source: audio_devices.source,
             tmux_sessions: probes::tmux_sessions()?,
+            hypr_keybinds: hypr::HyprKeybinds::load_and_parse()?,
         })
     }
 }

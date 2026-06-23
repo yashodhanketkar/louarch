@@ -6,6 +6,8 @@ use crate::context::Context;
 use crate::utils::cli::Config;
 use crate::utils::exec::cmd_run;
 
+mod keys;
+
 /// Handle the config action
 ///
 /// This function dispatches the correct action based on input from user
@@ -17,6 +19,7 @@ use crate::utils::exec::cmd_run;
 /// # Actions
 /// * `Config::View` view the current configuration
 /// * `Config::Edit` edit the configuration file
+/// * `Config::Keybinds` view the keybinds
 ///
 /// # Errors
 /// Returns an error
@@ -26,6 +29,7 @@ pub fn handler(ctx: &Context, action: Config) -> anyhow::Result<()> {
     match action {
         Config::View => view(ctx),
         Config::Edit => edit(ctx),
+        Config::Keybinds => keys::print(ctx),
     }
 }
 
